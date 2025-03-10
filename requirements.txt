@@ -3,3 +3,13 @@ python-dotenv
 pymupdf
 Pillow
 beautifulsoup4
+unstructured
+langchain
+langchain-community
+pdfminer.six==20221105
+pi_heif
+unstructured_inference
+pdf2image
+pytesseract
+unstructured[all]
+unstructured_pytesseract

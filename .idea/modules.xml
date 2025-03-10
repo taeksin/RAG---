@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/RAG전처리.iml" filepath="$PROJECT_DIR$/.idea/RAG전처리.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/RAG_Pre_processing.iml" filepath="$PROJECT_DIR$/.idea/RAG_Pre_processing.iml" />
     </modules>
   </component>
 </project>
