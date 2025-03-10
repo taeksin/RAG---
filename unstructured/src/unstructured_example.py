@@ -80,7 +80,9 @@ def process_pdf_to_markdown(pdf_path, languages=["kor", "eng"]):
             image_filename = f"{base_filename}_element_{idx+1}.png"
             image_path = os.path.join(images_folder, image_filename)
             crop_pdf_region(pdf_path, page_number, coords, image_path)
-            md_content.append(f"![Extracted Image]({image_path})\n")
+            # 상대 경로를 직접 문자열 포맷으로 생성 (슬래시는 "/"로)
+            relative_image_path = f"../output_images/{base_filename}/{image_filename}"
+            md_content.append(f"![Extracted Image]({relative_image_path})\n")
         
         # 일반 텍스트 추가 (각 요소를 별도의 Markdown 섹션으로)
         if text:
@@ -100,5 +102,5 @@ def process_pdf_to_markdown(pdf_path, languages=["kor", "eng"]):
     return output_path
 
 if __name__ == "__main__":
-    pdf_file = "pdf/모니터8p.pdf"
+    pdf_file = "pdf/약-6.pdf"
     process_pdf_to_markdown(pdf_file)
