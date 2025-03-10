@@ -1,0 +1,5 @@
+requests
+python-dotenv
+pymupdf
+Pillow
+beautifulsoup4
