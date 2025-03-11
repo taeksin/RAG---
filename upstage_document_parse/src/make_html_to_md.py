@@ -71,24 +71,63 @@ def make_html_to_md(html_path, images_paths):
         elif tagname == "table":
             # 1) HTML 테이블 -> parse_html_table_to_md()
             md_table = parse_html_table_to_md(elem)
-
-            # 2) 첫 행 헤더 구분 라인
+            # 2) 첫 행 헤더 구분 라인 추가
             lines = md_table.split("\n")
             if len(lines) >= 2:
                 col_count = lines[0].count("|") - 1
                 sep_line = "| " + " | ".join(["---"] * col_count) + " |"
                 lines.insert(1, sep_line)
             md_table_fixed = "\n".join(lines).strip()
-
             if md_table_fixed:
                 md_output.append(md_table_fixed)
-
             # 태그 id가 있을 경우, 해당 이미지 삽입 (ex: '3_page_1_table_1.png')
             elem_id = elem.get("id")
             if elem_id and elem_id in id_map:
                 rel_path = convert_to_relative_path(id_map[elem_id], html_path)
                 md_output.append(f"![id_{elem_id}]({rel_path})")
+            md_output.append("<<BLOCKEND>>")
 
+        elif tagname == "img":
+            # 단독 <img> 태그 처리: 이미지 삽입 후 alt 속성이 있으면 별도의 줄에 캡션 추가
+            src = elem.get("src", "")
+            if not src:
+                # src가 없으면 해당 태그의 id를 이용해 이미지 경로 추출
+                elem_id = elem.get("id", "")
+                if elem_id and elem_id in id_map:
+                    src = id_map[elem_id]
+            rel_path = convert_to_relative_path(src, html_path) if src else ""
+            md_output.append(f"![]({rel_path})")
+            alt_text = elem.get("alt", "")
+            if alt_text:
+                md_output.append(f"*{alt_text}*")
+            md_output.append("<<BLOCKEND>>")
+
+        elif tagname == "figure":
+            # <figure> 태그 처리: 내부 <img> 태그와 figcaption 처리
+            img = elem.find("img")
+            if img:
+                src = img.get("src", "")
+                if not src:
+                    # src가 없으면 figure 태그의 id를 이용해 이미지 경로 추출
+                    figure_id = elem.get("id", "")
+                    if figure_id and figure_id in id_map:
+                        src = id_map[figure_id]
+                rel_path = convert_to_relative_path(src, html_path) if src else ""
+                md_output.append(f"![]({rel_path})")
+                alt_text = img.get("alt", "")
+                if alt_text:
+                    md_output.append(f"*{alt_text}*")
+            else:
+                # img 태그가 없으면, figure 태그의 id로 이미지 삽입 시도
+                figure_id = elem.get("id", "")
+                if figure_id and figure_id in id_map:
+                    rel_path = convert_to_relative_path(id_map[figure_id], html_path)
+                    md_output.append(f"![]({rel_path})")
+            # figcaption 처리: 있으면 h4 헤딩으로 추가
+            figcaption = elem.find("figcaption")
+            if figcaption:
+                caption = get_text_content(figcaption)
+                md_output.append("#### " + caption)
             md_output.append("<<BLOCKEND>>")
 
         else:
@@ -104,10 +143,9 @@ def make_html_to_md(html_path, images_paths):
             content = get_text_content(elem)
             if content:
                 md_output.append(content)
-
             md_output.append("<<BLOCKEND>>")
 
-    # 2) <<BLOCKEND>> 사이 공백/빈줄만 있으면 하나만 남김
+    # 연속된 <<BLOCKEND>> 사이에 공백/빈줄만 있으면 하나만 남김
     cleaned_output = []
     i = 0
     while i < len(md_output):
@@ -119,7 +157,6 @@ def make_html_to_md(html_path, images_paths):
                 if not next_line or next_line == "<<BLOCKEND>>":
                     j += 1
                     continue
-                # 다른 내용이 나오면 중단
                 break
             cleaned_output.append("<<BLOCKEND>>")
             i = j
