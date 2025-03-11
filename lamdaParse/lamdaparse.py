@@ -138,7 +138,7 @@ def process_parsed_result(pdf_path, result):
     return output_md_path
 
 if __name__ == "__main__":
-    pdf_file = "pdf/your_pdf_file.pdf"  # PDF 파일 경로를 실제 파일로 변경하세요.
+    pdf_file = "pdf/모니터8p.pdf"
     result = parse_pdf_with_llamaparser(pdf_file)
     if result:
         process_parsed_result(pdf_file, result)
