@@ -1,7 +1,10 @@
 import os
 import re
+import sys
 from bs4 import BeautifulSoup
 from parse_html_table_to_md import parse_html_table_to_md
+
+sys.dont_write_bytecode = True
 
 def convert_to_relative_path(img_abs_path, reference_file_path):
     base_dir = os.path.dirname(reference_file_path)

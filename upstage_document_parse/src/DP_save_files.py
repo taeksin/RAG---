@@ -1,7 +1,10 @@
 # DP_save_files.py
 import os
+import sys
 from datetime import datetime
 from PDFImageExtractor import PDFImageExtractor 
+
+sys.dont_write_bytecode = True
 
 # Document Parse의 결과를 저장할 폴더 설정
 TEMP_DIR = "upstage_document_parse/temp"

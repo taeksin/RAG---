@@ -1,6 +1,9 @@
 import os
+import sys
 import fitz  # PyMuPDF
 from PIL import Image
+
+sys.dont_write_bytecode = True
 
 class PDFImageExtractor:
     def __init__(self, pdf_file, dpi=300):

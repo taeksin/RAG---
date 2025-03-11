@@ -23,7 +23,7 @@ parser = LlamaParse(
 )
 
 # PDF 경로
-pdf_path = "pdf/[꿈꾸는라이언]-3.pdf"
+pdf_path = "pdf/[꿈꾸는라이언]-3-사진.pdf"
 
 # PDF 존재 여부 확인
 if not os.path.exists(pdf_path):

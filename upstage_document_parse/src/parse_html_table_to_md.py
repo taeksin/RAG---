@@ -1,4 +1,7 @@
 import re
+import sys
+sys.dont_write_bytecode = True
+
 
 def parse_html_table_to_md(table_elem):
     """

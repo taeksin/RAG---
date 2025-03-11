@@ -1,0 +1,752 @@
+[
+    {
+        "type": "Title",
+        "element_id": "f56e416c0c192c2142d9d85a41f1ff8f",
+        "text": "안녕하세요.",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        96.0,
+                        213.0
+                    ],
+                    [
+                        96.0,
+                        242.0
+                    ],
+                    [
+                        228.0,
+                        242.0
+                    ],
+                    [
+                        228.0,
+                        213.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "Title",
+        "element_id": "12dde2fd83df59c4ad4a4de6e8266965",
+        "text": "먼저 필기 PAs",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        96.0,
+                        257.0
+                    ],
+                    [
+                        96.0,
+                        286.0
+                    ],
+                    [
+                        376.0,
+                        286.0
+                    ],
+                    [
+                        376.0,
+                        257.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "Title",
+        "element_id": "9f2a3a506e02fa7b178f40fd3ff7b9c5",
+        "text": "이 이제 앞두고",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        95.0,
+                        212.0
+                    ],
+                    [
+                        95.0,
+                        332.0
+                    ],
+                    [
+                        398.0,
+                        332.0
+                    ],
+                    [
+                        398.0,
+                        212.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "Title",
+        "element_id": "44c12244267b756cb8d4c81d7e2bdbff",
+        "text": "처음 위해 간단한 실기 공부 꼭 우리 모두",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        94.0,
+                        342.0
+                    ],
+                    [
+                        94.0,
+                        422.0
+                    ],
+                    [
+                        684.0,
+                        422.0
+                    ],
+                    [
+                        684.0,
+                        342.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "UncategorizedText",
+        "element_id": "75d9eb0746d1b0038cd9cb75da27d96f",
+        "text": "[9",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        92.0,
+                        485.0
+                    ],
+                    [
+                        92.0,
+                        509.0
+                    ],
+                    [
+                        109.0,
+                        509.0
+                    ],
+                    [
+                        109.0,
+                        485.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "parent_id": "44c12244267b756cb8d4c81d7e2bdbff",
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "NarrativeText",
+        "element_id": "26b0c0b42f0f82d892b4f37c25cc60b3",
+        "text": "가장 물론 기출 높은 건 아니에요. 그럼에도 아예 않는 것도 아닙니다! 들어 최근 이전 전체 실기 기출 결코 아니죠! 사실 한 문제 수험생",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        145.0,
+                        482.0
+                    ],
+                    [
+                        145.0,
+                        601.0
+                    ],
+                    [
+                        1501.0,
+                        601.0
+                    ],
+                    [
+                        1501.0,
+                        482.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "parent_id": "44c12244267b756cb8d4c81d7e2bdbff",
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "NarrativeText",
+        "element_id": "801fb9bb592d964678b92420d7bd72ef",
+        "text": "너무나 당연히 해요. 개정 실기 200 여 문항 개정 이후 전체 기출 시간 관계 상 최신 기준",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        256.0,
+                        618.0
+                    ],
+                    [
+                        256.0,
+                        692.0
+                    ],
+                    [
+                        1379.0,
+                        692.0
+                    ],
+                    [
+                        1379.0,
+                        618.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "parent_id": "44c12244267b756cb8d4c81d7e2bdbff",
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "Title",
+        "element_id": "f5f9e55f1e051949c3994d2f5810464b",
+        "text": "적극",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        641.0,
+                        707.0
+                    ],
+                    [
+                        641.0,
+                        735.0
+                    ],
+                    [
+                        687.0,
+                        735.0
+                    ],
+                    [
+                        687.0,
+                        707.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "NarrativeText",
+        "element_id": "ee46dba76e86b725cec8dbd9efdead92",
+        "text": "이 프로그래밍 반드시 돼요! 예전 보시면 프로그래밍 전체 중에서 그 실제 프로그래밍 없었죠. 그런데 안타깝지만 최신 기출 살펴보면 프로그래밍 언어 거의 달하고 있습니다! 말인 ZA 프로그래밍 아예 실기 필요한 받을 수 없어요. ㅠ 원래 해당",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        144.0,
+                        303.0
+                    ],
+                    [
+                        144.0,
+                        961.0
+                    ],
+                    [
+                        1468.0,
+                        961.0
+                    ],
+                    [
+                        1468.0,
+                        303.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "parent_id": "f5f9e55f1e051949c3994d2f5810464b",
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "NarrativeText",
+        "element_id": "28814543541a8ebd856cdec0f5d41560",
+        "text": "중 단 프로그래밍 했습니다만 최신 기출 보면 점점 높아지고 있고 단순 아닌 해야만 풀 수 있는 자주 있어 몇 방대한 프로그래밍 매우 실기 프로그래밍 언어 별도 기출 통한 이론 해외! 갖추기 위해 현업 개발자 함께 별도 무료 샘플 제공 및 별도 판매 한번 프로그래밍 언어 관련 키워드 실제 기출 상세한 쉽게",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        145.0,
+                        484.0
+                    ],
+                    [
+                        145.0,
+                        1232.0
+                    ],
+                    [
+                        1492.0,
+                        1232.0
+                    ],
+                    [
+                        1492.0,
+                        484.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "parent_id": "f5f9e55f1e051949c3994d2f5810464b",
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "Title",
+        "element_id": "1bd34beae068d100fca18c9ef7a1f783",
+        "text": "수 있으니 함께 반드시 프로그래밍 같이 공부",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        229.0,
+                        1247.0
+                    ],
+                    [
+                        229.0,
+                        1276.0
+                    ],
+                    [
+                        1226.0,
+                        1276.0
+                    ],
+                    [
+                        1226.0,
+                        1247.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "UncategorizedText",
+        "element_id": "ecbb26c74b7d85e52f5a92142035ef6d",
+        "text": "해당 프로그래밍 제외한 나머지 이론 대한 필기 먼저 보신 상당 부분 겹치는 많은 것을 그럴 수밖에 없는게 실기 이론 출제",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        144.0,
+                        1337.0
+                    ],
+                    [
+                        144.0,
+                        1413.0
+                    ],
+                    [
+                        1454.0,
+                        1413.0
+                    ],
+                    [
+                        1454.0,
+                        1337.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "parent_id": "1bd34beae068d100fca18c9ef7a1f783",
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "Title",
+        "element_id": "f590aa97ea595a88a5abee878e1fb9bb",
+        "text": "다르지 다만 총 다르게 경우 실제",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        232.0,
+                        1428.0
+                    ],
+                    [
+                        232.0,
+                        1457.0
+                    ],
+                    [
+                        1316.0,
+                        1457.0
+                    ],
+                    [
+                        1316.0,
+                        1428.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "NarrativeText",
+        "element_id": "21fd959136982249efbc3c660f549a3e",
+        "text": "않습니다. 보시면 아시겠지만 시험 과목 이론 프로그래밍 함께 있어요. ㅠ 이로 인해 시험 범위 수험생 실제 시험 때 관련",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        233.0,
+                        1472.0
+                    ],
+                    [
+                        233.0,
+                        1562.0
+                    ],
+                    [
+                        1480.0,
+                        1562.0
+                    ],
+                    [
+                        1480.0,
+                        1472.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "parent_id": "f590aa97ea595a88a5abee878e1fb9bb",
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "NarrativeText",
+        "element_id": "5f0ae8ef3257bc30e6fd4c0af4439f59",
+        "text": "각 어느 무슨 수 있고요. 따라서 출제 공식 아닌 총 다시 나뉘 방대한 시험 편하게",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        146.0,
+                        572.0
+                    ],
+                    [
+                        146.0,
+                        1682.0
+                    ],
+                    [
+                        1369.0,
+                        1682.0
+                    ],
+                    [
+                        1369.0,
+                        572.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "parent_id": "f590aa97ea595a88a5abee878e1fb9bb",
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "UncategorizedText",
+        "element_id": "2be2a1cffaca7333fc61be9c9023bb1e",
+        "text": "수 빠른 YAS 위해 필요한 핵심 놓치지 저도 이해할 있도록 최대한 꼼꼼하게 아무래도 프로그래밍 않아 많이 끝까지 마시고 SEs 좋은 믿어요",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        95.0,
+                        1788.0
+                    ],
+                    [
+                        95.0,
+                        1907.0
+                    ],
+                    [
+                        1468.0,
+                        1907.0
+                    ],
+                    [
+                        1468.0,
+                        1788.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "parent_id": "f590aa97ea595a88a5abee878e1fb9bb",
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "Title",
+        "element_id": "9098d1fb487f53298647b0deaeb9e1dd",
+        "text": "이 실기 - 의견 있으시면 언제든 편하게",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        225.0,
+                        487.0
+                    ],
+                    [
+                        225.0,
+                        1951.0
+                    ],
+                    [
+                        1270.0,
+                        1951.0
+                    ],
+                    [
+                        1270.0,
+                        487.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "Title",
+        "element_id": "db4748e73da5fede16936624c2584a0b",
+        "text": "꿈 스토어 모든 분들께 제가 아는 성심껏 빠르게 그럼 각자 모두",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        93.0,
+                        208.0
+                    ],
+                    [
+                        93.0,
+                        2041.0
+                    ],
+                    [
+                        1232.0,
+                        2041.0
+                    ],
+                    [
+                        1232.0,
+                        208.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    },
+    {
+        "type": "Title",
+        "element_id": "7ca24b579095ba1e6a6bbb04cbaa12fd",
+        "text": "합격 미리",
+        "metadata": {
+            "coordinates": {
+                "points": [
+                    [
+                        96.0,
+                        2058.0
+                    ],
+                    [
+                        96.0,
+                        2087.0
+                    ],
+                    [
+                        202.0,
+                        2087.0
+                    ],
+                    [
+                        202.0,
+                        2058.0
+                    ]
+                ],
+                "system": "PixelSpace",
+                "layout_width": 1653,
+                "layout_height": 2337
+            },
+            "filetype": "application/pdf",
+            "languages": [
+                "kor",
+                "eng"
+            ],
+            "last_modified": "2025-03-11T14:08:52",
+            "page_number": 1,
+            "file_directory": "pdf",
+            "filename": "[꿈꾸는라이언]-3-사진.pdf"
+        }
+    }
+]
