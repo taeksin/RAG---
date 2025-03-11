@@ -80,6 +80,12 @@ def make_html_to_md(html_path, images_paths):
             md_table_fixed = "\n".join(lines).strip()
             if md_table_fixed:
                 md_output.append(md_table_fixed)
+            # 추가: <caption> 태그가 있다면 캡션 텍스트를 Markdown으로 추가
+            caption = elem.find("caption")
+            if caption:
+                cap_text = caption.get_text(strip=True)
+                if cap_text:
+                    md_output.append(f"**{cap_text}**")
             # 태그 id가 있을 경우, 해당 이미지 삽입 (ex: '3_page_1_table_1.png')
             elem_id = elem.get("id")
             if elem_id and elem_id in id_map:
@@ -103,7 +109,7 @@ def make_html_to_md(html_path, images_paths):
             md_output.append("<<BLOCKEND>>")
 
         elif tagname == "figure":
-            # <figure> 태그 처리: 내부 <img> 태그와 figcaption 처리
+            # <figure> 태그 처리: 내부의 <img>, <figcaption> 및 <table> 처리
             img = elem.find("img")
             if img:
                 src = img.get("src", "")
@@ -128,6 +134,18 @@ def make_html_to_md(html_path, images_paths):
             if figcaption:
                 caption = get_text_content(figcaption)
                 md_output.append("#### " + caption)
+            # <table> 처리: figure 내의 테이블이 있으면 Markdown 표로 변환 후 추가
+            table = elem.find("table")
+            if table:
+                md_table = parse_html_table_to_md(table)
+                lines = md_table.split("\n")
+                if len(lines) >= 2:
+                    col_count = lines[0].count("|") - 1
+                    sep_line = "| " + " | ".join(["---"] * col_count) + " |"
+                    lines.insert(1, sep_line)
+                md_table_fixed = "\n".join(lines).strip()
+                if md_table_fixed:
+                    md_output.append(md_table_fixed)
             md_output.append("<<BLOCKEND>>")
 
         else:
