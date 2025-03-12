@@ -80,4 +80,4 @@ def save_files(result, filename):
         print("⚠️ API 응답에 elements 정보가 없습니다.")
 
     # **file_paths (HTML/MD/TXT, result JSON)와 images_paths (크롭된 이미지 경로) 리턴**
-    return file_paths, images_paths
+    return file_paths, images_paths, base_folder

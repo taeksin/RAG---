@@ -19,15 +19,20 @@ from generate_image_captions import generate_captions
 
 sys.dont_write_bytecode = True
 load_dotenv()
-UPSTAGE_API_KEY = os.getenv("UPSTAGE_API_KEY")
-if not UPSTAGE_API_KEY:
-    raise ValueError("UPSTAGE_API_KEY가 설정되지 않았습니다. .env 파일을 확인하세요.")
+UPSTAGE_API_KEY, OPENAI_API_KEY = map(os.getenv, ["UPSTAGE_API_KEY", "OPENAI_API_KEY"])
+
+if not (UPSTAGE_API_KEY and OPENAI_API_KEY):
+    raise ValueError("환경 변수가 설정되지 않았습니다. .env 파일을 확인하세요.")
+
+# 전역 변수로 사용할 base_folder 선언
+BASE_FOLDER = None
 
 def preprocess_pdf(filename):
     """
     PDF 파일을 Upstage Document Parse API를 사용하여 분석하고 결과를 temp 폴더에 저장한 뒤,
-    그 HTML 파일을 MD로 변환합니다.
+    그 HTML 파일을 MD로 변환하고, base_folder를 전역 변수에 저장합니다.
     """
+    global BASE_FOLDER
     url = "https://api.upstage.ai/v1/document-ai/document-parse"
     headers = {"Authorization": f"Bearer {UPSTAGE_API_KEY}"}
     start_time = time.time()
@@ -45,14 +50,14 @@ def preprocess_pdf(filename):
 
     if response.status_code == 200:
         result = response.json()
-        file_paths, images_paths = save_files(result, filename)
-        print(images_paths)
+        file_paths, images_paths, base_folder = save_files(result, filename)
+        BASE_FOLDER = base_folder.replace("\\", "/")
         html_path = file_paths.get("html")
         if html_path:
             new_md_path = make_html_to_md(html_path, images_paths)
         end_time = time.time()
         print(f"⏱️_파싱 소요시간: {end_time - start_time:.2f}초\n")
-        return file_paths, images_paths
+        return file_paths, images_paths, base_folder
     else:
         error_msg = f"❌ API 요청 실패: {response.status_code}, {response.text}"
         print(error_msg)
@@ -100,19 +105,5 @@ if __name__ == "__main__":
         print("MD:", merged_md_path)
         print("HTML:", merged_html_path)
         print("Items 폴더:", merged_items_folder)
-        items_folder_to_use = merged_items_folder
-    else:
-        print("단일 파일 파싱 결과가 생성되었습니다.")
-        file_paths, _ = results[0]
-        if "html" in file_paths:
-            single_folder = os.path.dirname(file_paths["html"])
-            items_folder_to_use = os.path.join(single_folder, "Items")
-        else:
-            items_folder_to_use = None
-
-    # 저장된 이미지에 대해 캡션 생성 작업 수행
-    if items_folder_to_use and os.path.exists(items_folder_to_use):
-        print("이미지 캡션 생성 작업 시작...")
-        generate_captions(items_folder_to_use)
-    else:
-        print("캡션 생성을 위한 Items 폴더를 찾을 수 없습니다.")
+    print(BASE_FOLDER)
+    generate_captions(OPENAI_API_KEY, BASE_FOLDER)
