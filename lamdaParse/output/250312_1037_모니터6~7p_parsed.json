@@ -1,0 +1,823 @@
+[
+  {
+    "page": 1,
+    "text": "Smart Media Journal / Vol.14, No.2 / ISSN:2287-1322                                                           2025년 02월 스마트미디어저널                                         107\n                                                                                               Gamma (32Hz~)                                               Awareness\n                                                                                               Beta(12-32H2)                                               Alertness\n                                                                                               Alpha (8-12Hz)                                              Relaxed\n                                                                                               Theta (4-8Hz)                                               Tired\n                                                                                               Delta (0.5-4Hz)                                             sleep\n                                                                                              μ",
+    "md": "| 뇌파 종류 | 주파수 범위 | 상태        |\n|-----------|-------------|-------------|\n| Gamma     | 32Hz~       | Awareness   |\n| Beta      | 12-32Hz     | Alertness   |\n| Alpha     | 8-12Hz      | Relaxed     |\n| Theta     | 4-8Hz       | Tired       |\n| Delta     | 0.5-4Hz     | Sleep       |\n",
+    "images": [
+      {
+        "name": "img_p0_35.png",
+        "height": 804,
+        "width": 1135,
+        "x": 56.639997750000006,
+        "y": 462.47996125,
+        "original_width": 1135,
+        "original_height": 804
+      },
+      {
+        "name": "img_p0_36.png",
+        "height": 804,
+        "width": 1132,
+        "x": 167.879997,
+        "y": 461.87999275000004,
+        "original_width": 1132,
+        "original_height": 804
+      },
+      {
+        "name": "img_p0_87.png",
+        "height": 418,
+        "width": 1618,
+        "x": 317.879997,
+        "y": 389.27992825,
+        "original_width": 1618,
+        "original_height": 418,
+        "ocr": [
+          {
+            "x": 4,
+            "y": 50,
+            "w": 294,
+            "h": 56,
+            "confidence": "0.4382913042991369",
+            "text": "Gamma (32Hz~)"
+          },
+          {
+            "x": 1130,
+            "y": 68,
+            "w": 146,
+            "h": 32,
+            "confidence": "0.9956233170766834",
+            "text": "Awareness"
+          },
+          {
+            "x": 4,
+            "y": 210,
+            "w": 242,
+            "h": 52,
+            "confidence": "0.9686896406619",
+            "text": "Beta(12-32H2)"
+          },
+          {
+            "x": 1128,
+            "y": 226,
+            "w": 130,
+            "h": 32,
+            "confidence": "0.999985734570808",
+            "text": "Alertness"
+          },
+          {
+            "x": 6,
+            "y": 366,
+            "w": 262,
+            "h": 52,
+            "confidence": "0.7896959809832802",
+            "text": "Alpha (8-12Hz)"
+          },
+          {
+            "x": 1130,
+            "y": 384,
+            "w": 108,
+            "h": 32,
+            "confidence": "0.9999958547646062",
+            "text": "Relaxed"
+          }
+        ]
+      },
+      {
+        "name": "img_p0_88.png",
+        "height": 418,
+        "width": 1618,
+        "x": 317.879997,
+        "y": 453.7199784999999,
+        "original_width": 1618,
+        "original_height": 418,
+        "ocr": [
+          {
+            "x": 4,
+            "y": 108,
+            "w": 250,
+            "h": 56,
+            "confidence": "0.9478315772059174",
+            "text": "Theta (4-8Hz)"
+          },
+          {
+            "x": 1128,
+            "y": 126,
+            "w": 74,
+            "h": 32,
+            "confidence": "0.9999607089538365",
+            "text": "Tired"
+          },
+          {
+            "x": 6,
+            "y": 266,
+            "w": 259,
+            "h": 55,
+            "confidence": "0.9879305070132562",
+            "text": "Delta (0.5-4Hz)"
+          },
+          {
+            "x": 1129,
+            "y": 279,
+            "w": 77,
+            "h": 45,
+            "confidence": "0.979224320270068",
+            "text": "sleep"
+          }
+        ]
+      },
+      {
+        "name": "img_p0_109.png",
+        "height": 200,
+        "width": 3058,
+        "x": -8,
+        "y": 20.020299999999942,
+        "original_width": 3058,
+        "original_height": 200
+      },
+      {
+        "name": "img_p0_1.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 60.71995675,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_6.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 115.199962,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_8.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 133.31995375,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_12.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 169.679962,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_14.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 187.79995300000002,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_22.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 278.63994925,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_24.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 296.75995225,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_25.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 314.9999575,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_43.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 649.799953,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_55.png",
+        "height": 117,
+        "width": 2005,
+        "x": 310.32000750000003,
+        "y": 78.83995974999999,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_57.png",
+        "height": 117,
+        "width": 2005,
+        "x": 310.32000750000003,
+        "y": 97.07995975,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_64.png",
+        "height": 117,
+        "width": 2005,
+        "x": 310.32000750000003,
+        "y": 169.679962,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_66.png",
+        "height": 117,
+        "width": 2005,
+        "x": 310.32000750000003,
+        "y": 187.79995300000002,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_72.png",
+        "height": 117,
+        "width": 2005,
+        "x": 310.32000750000003,
+        "y": 242.27996425000003,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_74.png",
+        "height": 117,
+        "width": 2005,
+        "x": 310.32000750000003,
+        "y": 260.519947,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_97.png",
+        "height": 117,
+        "width": 1961,
+        "x": 310.32000750000003,
+        "y": 614.1599387499999,
+        "original_width": 1961,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_4.png",
+        "height": 117,
+        "width": 1960,
+        "x": 56.639997750000006,
+        "y": 97.07995975,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_18.png",
+        "height": 117,
+        "width": 1960,
+        "x": 56.639997750000006,
+        "y": 224.15996125,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_20.png",
+        "height": 117,
+        "width": 1960,
+        "x": 56.639997750000006,
+        "y": 242.27996425000003,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_28.png",
+        "height": 117,
+        "width": 1960,
+        "x": 56.639997750000006,
+        "y": 351.2399635,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_31.png",
+        "height": 117,
+        "width": 1960,
+        "x": 56.639997750000006,
+        "y": 387.59992525,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_32.png",
+        "height": 117,
+        "width": 1960,
+        "x": 56.639997750000006,
+        "y": 405.7199515,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_47.png",
+        "height": 117,
+        "width": 1960,
+        "x": 56.639997750000006,
+        "y": 686.0399124999999,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_50.png",
+        "height": 117,
+        "width": 1960,
+        "x": 56.639997750000006,
+        "y": 722.399944,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p0_78.png",
+        "height": 117,
+        "width": 1960,
+        "x": 310.32000750000003,
+        "y": 296.75995225,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "page_1.jpg",
+        "height": 841.92,
+        "width": 595.32,
+        "x": 0,
+        "y": 0,
+        "original_width": 1131,
+        "original_height": 1600,
+        "type": "full_page_screenshot"
+      }
+    ],
+    "charts": [],
+    "items": [
+      {
+        "type": "table",
+        "rows": [
+          [
+            "뇌파 종류",
+            "주파수 범위",
+            "상태"
+          ],
+          [
+            "Gamma",
+            "32Hz~",
+            "Awareness"
+          ],
+          [
+            "Beta",
+            "12-32Hz",
+            "Alertness"
+          ],
+          [
+            "Alpha",
+            "8-12Hz",
+            "Relaxed"
+          ],
+          [
+            "Theta",
+            "4-8Hz",
+            "Tired"
+          ],
+          [
+            "Delta",
+            "0.5-4Hz",
+            "Sleep"
+          ]
+        ],
+        "md": "| 뇌파 종류 | 주파수 범위 | 상태        |\n| Gamma     | 32Hz~       | Awareness   |\n| Beta      | 12-32Hz     | Alertness   |\n| Alpha     | 8-12Hz      | Relaxed     |\n| Theta     | 4-8Hz       | Tired       |\n| Delta     | 0.5-4Hz     | Sleep       |",
+        "isPerfectTable": true,
+        "csv": "\"뇌파 종류\",\"주파수 범위\",\"상태\"\n\"Gamma\",\"32Hz~\",\"Awareness\"\n\"Beta\",\"12-32Hz\",\"Alertness\"\n\"Alpha\",\"8-12Hz\",\"Relaxed\"\n\"Theta\",\"4-8Hz\",\"Tired\"\n\"Delta\",\"0.5-4Hz\",\"Sleep\"",
+        "bBox": {
+          "x": 0,
+          "y": 0,
+          "w": 595.32,
+          "h": 841.92
+        }
+      }
+    ],
+    "status": "OK",
+    "links": [],
+    "width": 595.32,
+    "height": 841.92,
+    "triggeredAutoMode": true,
+    "parsingMode": "premium",
+    "structuredData": null,
+    "noStructuredContent": false,
+    "noTextContent": false
+  },
+  {
+    "page": 2,
+    "text": "108        2025년 02월 스마트미디어저널                              Smart Media Journal / Vol.14, No.2 / ISSN:2287-1322\n                                                                                      J0 Spectrum\n                                                                        EHOR-Monolor              EMOR-HHDNRI\n             α",
+    "md": "Smart Media Journal / Vol.14, No.2 / ISSN:2287-1322\n\n트레스와 우울 증상의 심각도뿐만 아니라 불안과도 긍정적인 상관관계를 보이는 것으로 알려져 있다[37]. 이에 따라 베타파는 자극에 의한 정신적 각성 상태에서 증가[36]하고, 알파파는 이완 시 더 많이 나타나며[38], 세타파는 주로 깊은 수면이나 깊은 이완 상태에서 나타나며, 창의적인 사고와 관련이 있다[39]. 델타파는 깊은 수면 상태에서 주로 발생하며, 신체의 회복과 재생에 중요한 역할을 한다[40].\n\n본 연구는 모니터와 VR을 사용한 EMDR 방법에 따른 오른쪽 전두엽 베타파 활동의 감소를 측정하는 것을 목적으로 하였다. 우울증 감소에 더 효과적인 방법을 확인하기 위해, 기존 모니터 기반의 안구운동 둔감화 및 재처리(EMDR)와 헤드마운트 디스플레이(HMD) 장치를 활용한 EMDR 간의 전두엽 베타파 활동을 측정하였다.\n\nC대학교 기관생명윤리심의위원회(IRB)의 승인 (1044396 202303 HR 043 01)을 받았다.\n\n## 2. EMDR 측정 데이터 분석\n\nEMDR 실험 참가자들은 모니터에서 2D 바디오를 보거나 HMD를 사용해 3D 가상 현실 바디오를 보면서 <그림 5>와 같이 뇌파 활동이 스펙트럼이 측정되었다. 뇌파 분석 결과는 <표 1>과 같다.\n\n## V. 연구결과\n\n### 1. 측정 도구의 타당도와 신뢰도 검증\n\n참가자들은 온라인 포스터를 통해 무작위로 선정되었으며, 우울 수준은 한국판 역학연구센터 우울척도(K CES D)를 사용하여 평가되었다. 총 20개 문항으로 구성되어 있으며 우울 점수는 0점 '극히 드물게'에서 3점 '거의 대부분'으로, 4점 리커트척도(Likert)를 이용하였다. 우울증 점수가 높을수록 우울증이 심각하다는 것을 의미한다. 0에서 13점은 약간 우울, 14에서 19점은 경미한 우울, 20에서 28점은 중등도 우울, 29에서 63점까지를 심각한 우울로 분류하였다[41].\n\n본 연구는 20점 이상을 기록한 우울 증상을 보이는 16명을 중심으로 진행되었다.\n\n본 연구에서 K CES D의 신뢰도는 Cronbach's α = .71로 측정되었다.\n\n참가자들의 인구 통계학적 특성은 여성 비율이 81.3%로 남성(18.8%)보다 우세하였으며, 평균 연령은 24.31세(SD = 2.30)였습니다. 본 연구는\n\n그림 5. 16명의 실험 참가자에 대한 모니터 및 VR(HMD) EEG 측정의 3D 스펙트럼 비교",
+    "images": [
+      {
+        "name": "img_p1_81.png",
+        "height": 1159,
+        "width": 533,
+        "x": 317.879997,
+        "y": 264.23996125,
+        "original_width": 533,
+        "original_height": 1159,
+        "ocr": [
+          {
+            "x": 248,
+            "y": 6,
+            "w": 54,
+            "h": 8,
+            "confidence": "0.6229463273925",
+            "text": "J0 Spectrum"
+          },
+          {
+            "x": 118,
+            "y": 20,
+            "w": 64,
+            "h": 8,
+            "confidence": "0.33236676250006636",
+            "text": "EHOR-Monolor"
+          },
+          {
+            "x": 370,
+            "y": 20,
+            "w": 68,
+            "h": 8,
+            "confidence": "0.40443602447889543",
+            "text": "EMOR-HHDNRI"
+          }
+        ]
+      },
+      {
+        "name": "img_p1_86.png",
+        "height": 200,
+        "width": 3058,
+        "x": -8,
+        "y": 20.020299999999942,
+        "original_width": 3058,
+        "original_height": 200
+      },
+      {
+        "name": "img_p1_20.png",
+        "height": 117,
+        "width": 2007,
+        "x": 56.639997750000006,
+        "y": 260.519947,
+        "original_width": 2007,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_23.png",
+        "height": 117,
+        "width": 2006,
+        "x": 56.639997750000006,
+        "y": 296.75995225,
+        "original_width": 2006,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_77.png",
+        "height": 117,
+        "width": 2006,
+        "x": 310.32000750000003,
+        "y": 208.07995975,
+        "original_width": 2006,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_3.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 97.07995975,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_5.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 115.199962,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_7.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 133.31995375,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_11.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 169.679962,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_36.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 454.799953,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_40.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 491.15993875,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_47.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 563.7599289999999,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_63.png",
+        "height": 117,
+        "width": 2005,
+        "x": 56.639997750000006,
+        "y": 727.1999162499999,
+        "original_width": 2005,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_9.png",
+        "height": 117,
+        "width": 1960,
+        "x": 56.639997750000006,
+        "y": 151.559959,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_13.png",
+        "height": 117,
+        "width": 1960,
+        "x": 56.639997750000006,
+        "y": 187.79995300000002,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_19.png",
+        "height": 117,
+        "width": 1960,
+        "x": 56.639997750000006,
+        "y": 242.27996425000003,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_22.png",
+        "height": 117,
+        "width": 1960,
+        "x": 56.639997750000006,
+        "y": 278.63994925,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_43.png",
+        "height": 117,
+        "width": 1960,
+        "x": 56.879997,
+        "y": 509.27991849999995,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_75.png",
+        "height": 117,
+        "width": 1960,
+        "x": 310.32000750000003,
+        "y": 189.95995675,
+        "original_width": 1960,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_1.png",
+        "height": 117,
+        "width": 1959,
+        "x": 56.639997750000006,
+        "y": 60.71995675,
+        "original_width": 1959,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_2.png",
+        "height": 117,
+        "width": 1959,
+        "x": 56.639997750000006,
+        "y": 78.83995974999999,
+        "original_width": 1959,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_44.png",
+        "height": 117,
+        "width": 1959,
+        "x": 56.639997750000006,
+        "y": 527.399944,
+        "original_width": 1959,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_46.png",
+        "height": 117,
+        "width": 1959,
+        "x": 56.639997750000006,
+        "y": 545.63994925,
+        "original_width": 1959,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_49.png",
+        "height": 117,
+        "width": 1959,
+        "x": 56.639997750000006,
+        "y": 581.87995525,
+        "original_width": 1959,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_53.png",
+        "height": 117,
+        "width": 1959,
+        "x": 56.639997750000006,
+        "y": 618.23994025,
+        "original_width": 1959,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_73.png",
+        "height": 117,
+        "width": 1959,
+        "x": 310.32000750000003,
+        "y": 171.71996274999998,
+        "original_width": 1959,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_60.png",
+        "height": 117,
+        "width": 1943,
+        "x": 64.19999849999999,
+        "y": 690.83993125,
+        "original_width": 1943,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_56.png",
+        "height": 117,
+        "width": 1942,
+        "x": 64.19999849999999,
+        "y": 654.59992525,
+        "original_width": 1942,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_38.png",
+        "height": 117,
+        "width": 1937,
+        "x": 56.639997750000006,
+        "y": 472.91993275000004,
+        "original_width": 1937,
+        "original_height": 117
+      },
+      {
+        "name": "img_p1_65.png",
+        "height": 117,
+        "width": 1898,
+        "x": 317.63999175000004,
+        "y": 60.71995675,
+        "original_width": 1898,
+        "original_height": 117
+      },
+      {
+        "name": "page_2.jpg",
+        "height": 841.92,
+        "width": 595.32,
+        "x": 0,
+        "y": 0,
+        "original_width": 1131,
+        "original_height": 1600,
+        "type": "full_page_screenshot"
+      }
+    ],
+    "charts": [],
+    "items": [
+      {
+        "type": "text",
+        "value": "Smart Media Journal / Vol.14, No.2 / ISSN:2287-1322\n\n트레스와 우울 증상의 심각도뿐만 아니라 불안과도 긍정적인 상관관계를 보이는 것으로 알려져 있다[37]. 이에 따라 베타파는 자극에 의한 정신적 각성 상태에서 증가[36]하고, 알파파는 이완 시 더 많이 나타나며[38], 세타파는 주로 깊은 수면이나 깊은 이완 상태에서 나타나며, 창의적인 사고와 관련이 있다[39]. 델타파는 깊은 수면 상태에서 주로 발생하며, 신체의 회복과 재생에 중요한 역할을 한다[40].\n\n본 연구는 모니터와 VR을 사용한 EMDR 방법에 따른 오른쪽 전두엽 베타파 활동의 감소를 측정하는 것을 목적으로 하였다. 우울증 감소에 더 효과적인 방법을 확인하기 위해, 기존 모니터 기반의 안구운동 둔감화 및 재처리(EMDR)와 헤드마운트 디스플레이(HMD) 장치를 활용한 EMDR 간의 전두엽 베타파 활동을 측정하였다.\n\nC대학교 기관생명윤리심의위원회(IRB)의 승인 (1044396 202303 HR 043 01)을 받았다.",
+        "md": "Smart Media Journal / Vol.14, No.2 / ISSN:2287-1322\n\n트레스와 우울 증상의 심각도뿐만 아니라 불안과도 긍정적인 상관관계를 보이는 것으로 알려져 있다[37]. 이에 따라 베타파는 자극에 의한 정신적 각성 상태에서 증가[36]하고, 알파파는 이완 시 더 많이 나타나며[38], 세타파는 주로 깊은 수면이나 깊은 이완 상태에서 나타나며, 창의적인 사고와 관련이 있다[39]. 델타파는 깊은 수면 상태에서 주로 발생하며, 신체의 회복과 재생에 중요한 역할을 한다[40].\n\n본 연구는 모니터와 VR을 사용한 EMDR 방법에 따른 오른쪽 전두엽 베타파 활동의 감소를 측정하는 것을 목적으로 하였다. 우울증 감소에 더 효과적인 방법을 확인하기 위해, 기존 모니터 기반의 안구운동 둔감화 및 재처리(EMDR)와 헤드마운트 디스플레이(HMD) 장치를 활용한 EMDR 간의 전두엽 베타파 활동을 측정하였다.\n\nC대학교 기관생명윤리심의위원회(IRB)의 승인 (1044396 202303 HR 043 01)을 받았다.",
+        "bBox": {
+          "x": 0,
+          "y": 0,
+          "w": 595.32,
+          "h": 841.92
+        }
+      },
+      {
+        "type": "heading",
+        "lvl": 2,
+        "value": "2. EMDR 측정 데이터 분석",
+        "md": "## 2. EMDR 측정 데이터 분석",
+        "bBox": {
+          "x": 0,
+          "y": 0,
+          "w": 595.32,
+          "h": 841.92
+        }
+      },
+      {
+        "type": "text",
+        "value": "EMDR 실험 참가자들은 모니터에서 2D 바디오를 보거나 HMD를 사용해 3D 가상 현실 바디오를 보면서 <그림 5>와 같이 뇌파 활동이 스펙트럼이 측정되었다. 뇌파 분석 결과는 <표 1>과 같다.",
+        "md": "EMDR 실험 참가자들은 모니터에서 2D 바디오를 보거나 HMD를 사용해 3D 가상 현실 바디오를 보면서 <그림 5>와 같이 뇌파 활동이 스펙트럼이 측정되었다. 뇌파 분석 결과는 <표 1>과 같다.",
+        "bBox": {
+          "x": 0,
+          "y": 0,
+          "w": 595.32,
+          "h": 841.92
+        }
+      },
+      {
+        "type": "heading",
+        "lvl": 2,
+        "value": "V. 연구결과",
+        "md": "## V. 연구결과",
+        "bBox": {
+          "x": 0,
+          "y": 0,
+          "w": 595.32,
+          "h": 841.92
+        }
+      },
+      {
+        "type": "heading",
+        "lvl": 3,
+        "value": "1. 측정 도구의 타당도와 신뢰도 검증",
+        "md": "### 1. 측정 도구의 타당도와 신뢰도 검증",
+        "bBox": {
+          "x": 0,
+          "y": 0,
+          "w": 595.32,
+          "h": 841.92
+        }
+      },
+      {
+        "type": "text",
+        "value": "참가자들은 온라인 포스터를 통해 무작위로 선정되었으며, 우울 수준은 한국판 역학연구센터 우울척도(K CES D)를 사용하여 평가되었다. 총 20개 문항으로 구성되어 있으며 우울 점수는 0점 '극히 드물게'에서 3점 '거의 대부분'으로, 4점 리커트척도(Likert)를 이용하였다. 우울증 점수가 높을수록 우울증이 심각하다는 것을 의미한다. 0에서 13점은 약간 우울, 14에서 19점은 경미한 우울, 20에서 28점은 중등도 우울, 29에서 63점까지를 심각한 우울로 분류하였다[41].\n\n본 연구는 20점 이상을 기록한 우울 증상을 보이는 16명을 중심으로 진행되었다.\n\n본 연구에서 K CES D의 신뢰도는 Cronbach's α = .71로 측정되었다.\n\n참가자들의 인구 통계학적 특성은 여성 비율이 81.3%로 남성(18.8%)보다 우세하였으며, 평균 연령은 24.31세(SD = 2.30)였습니다. 본 연구는\n\n그림 5. 16명의 실험 참가자에 대한 모니터 및 VR(HMD) EEG 측정의 3D 스펙트럼 비교",
+        "md": "참가자들은 온라인 포스터를 통해 무작위로 선정되었으며, 우울 수준은 한국판 역학연구센터 우울척도(K CES D)를 사용하여 평가되었다. 총 20개 문항으로 구성되어 있으며 우울 점수는 0점 '극히 드물게'에서 3점 '거의 대부분'으로, 4점 리커트척도(Likert)를 이용하였다. 우울증 점수가 높을수록 우울증이 심각하다는 것을 의미한다. 0에서 13점은 약간 우울, 14에서 19점은 경미한 우울, 20에서 28점은 중등도 우울, 29에서 63점까지를 심각한 우울로 분류하였다[41].\n\n본 연구는 20점 이상을 기록한 우울 증상을 보이는 16명을 중심으로 진행되었다.\n\n본 연구에서 K CES D의 신뢰도는 Cronbach's α = .71로 측정되었다.\n\n참가자들의 인구 통계학적 특성은 여성 비율이 81.3%로 남성(18.8%)보다 우세하였으며, 평균 연령은 24.31세(SD = 2.30)였습니다. 본 연구는\n\n그림 5. 16명의 실험 참가자에 대한 모니터 및 VR(HMD) EEG 측정의 3D 스펙트럼 비교",
+        "bBox": {
+          "x": 0,
+          "y": 0,
+          "w": 595.32,
+          "h": 841.92
+        }
+      }
+    ],
+    "status": "OK",
+    "links": [],
+    "width": 595.32,
+    "height": 841.92,
+    "triggeredAutoMode": true,
+    "parsingMode": "premium",
+    "structuredData": null,
+    "noStructuredContent": false,
+    "noTextContent": false
+  }
+]

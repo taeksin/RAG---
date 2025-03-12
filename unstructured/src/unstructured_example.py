@@ -112,5 +112,5 @@ def process_pdf_to_markdown(pdf_path, languages=["kor", "eng"]):
     return output_path
 
 if __name__ == "__main__":
-    pdf_file = "pdf/[꿈꾸는라이언]-3-사진.pdf"
+    pdf_file = "pdf/20241220_[교재]_연말정산 세무_이석정_한국_회원_3.5시간.pdf"
     process_pdf_to_markdown(pdf_file)
