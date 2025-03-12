@@ -57,7 +57,6 @@ def get_image_caption(image_path, api_key, prompt_context=""):
         "대답은 무조건 한국어로 해야 하며, 이미지를 보고 알아낼 수 있는 모든 정보를 정밀하게 분석한 후 대답해.\n"
         + (f"아래는 해당 이미지가 있던 페이지의 내용이야:\n{prompt_context}" if prompt_context else "")
     )
-    print(prompt)
     
     messages = [
         {"type": "text", "text": prompt},
