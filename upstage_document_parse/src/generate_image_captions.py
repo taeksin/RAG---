@@ -55,6 +55,7 @@ def get_image_caption(image_path, api_key, prompt_context=""):
     prompt = (
         "너는 이미지를 분석하고 이미지에 대한 설명을 해주는 어시스턴트야. "
         "대답은 무조건 한국어로 해야 하며, 이미지를 보고 알아낼 수 있는 모든 정보를 정밀하게 분석한 후 대답해.\n"
+        "이미지가 표라면 읽어서 마크다운으로 만들어줘야해"
         + (f"아래는 해당 이미지가 있던 페이지의 내용이야:\n{prompt_context}" if prompt_context else "")
     )
     

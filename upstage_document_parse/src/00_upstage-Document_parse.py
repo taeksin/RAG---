@@ -96,7 +96,7 @@ def process_pdf_with_split(pdf_path, split_threshold=100, batch_size=50):
 if __name__ == "__main__":
     # 사용 예시: PDF 파일이 100페이지 이상이면 분할 후 각각 파싱하고,
     # 분할된 경우 merge_outputs()를 호출하여 최종 MD, HTML, Items 병합 작업을 수행합니다.
-    pdf_file = "pdf/모니터6~7p.pdf"
+    pdf_file = "pdf/모니터8p.pdf"
     results, split_files = process_pdf_with_split(pdf_file, split_threshold=100, batch_size=50)
     
     if split_files:
@@ -105,5 +105,7 @@ if __name__ == "__main__":
         print("MD:", merged_md_path)
         print("HTML:", merged_html_path)
         print("Items 폴더:", merged_items_folder)
-    print(BASE_FOLDER)
+
+    # 나중에 주석 풀기
+    # 이미지에 캡션 다는것
     generate_captions(OPENAI_API_KEY, BASE_FOLDER)
