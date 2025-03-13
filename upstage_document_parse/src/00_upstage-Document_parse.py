@@ -1,21 +1,22 @@
 # 00_upstage-Document_parse.py
 import os
 import sys
+import fitz
 import time
 import requests
 import concurrent.futures
-import shutil
 from dotenv import load_dotenv
 from datetime import datetime
-from DP_save_files import save_files  
-from make_html_to_md import make_html_to_md
+from save_files import save_files  
+from html_to_md import html_to_md
 from split_pdf import split_pdf  # PDF 분할 함수 임포트
-import fitz  # 페이지 수 확인용
 
 # merge_outputs 모듈 임포트 (merge_outputs.py 파일에 정의되어 있음)
 from merge_outputs import merge_outputs
 # generate_image_captions 모듈에서 캡션 생성 함수를 임포트
 from generate_image_captions import generate_captions
+# merge_markdown_captions 오듈에서 이미지에 캡션을 추가함
+from merge_markdown_captions import merge_captions_into_md
 
 sys.dont_write_bytecode = True
 load_dotenv()
@@ -54,7 +55,7 @@ def preprocess_pdf(filename):
         BASE_FOLDER = base_folder.replace("\\", "/")
         html_path = file_paths.get("html")
         if html_path:
-            new_md_path = make_html_to_md(html_path, images_paths)
+            new_md_path = html_to_md(html_path, images_paths)
         end_time = time.time()
         print(f"⏱️_파싱 소요시간: {end_time - start_time:.2f}초\n")
         return file_paths, images_paths, base_folder
@@ -96,7 +97,7 @@ def process_pdf_with_split(pdf_path, split_threshold=100, batch_size=50):
 if __name__ == "__main__":
     # 사용 예시: PDF 파일이 100페이지 이상이면 분할 후 각각 파싱하고,
     # 분할된 경우 merge_outputs()를 호출하여 최종 MD, HTML, Items 병합 작업을 수행합니다.
-    pdf_file = "pdf/모니터8p.pdf"
+    pdf_file = "pdf/모니터6~7p.pdf"
     results, split_files = process_pdf_with_split(pdf_file, split_threshold=100, batch_size=50)
     
     if split_files:
@@ -108,4 +109,5 @@ if __name__ == "__main__":
 
     # 나중에 주석 풀기
     # 이미지에 캡션 다는것
-    generate_captions(OPENAI_API_KEY, BASE_FOLDER)
+    generate_captions(OPENAI_API_KEY, BASE_FOLDER) 
+    merge_captions_into_md(BASE_FOLDER)
