@@ -19,3 +19,5 @@ llama-index-readers-file
 llama-index-llms-openai
 llama-index-embeddings-openai
 llama-parse
+faiss-cpu
+langchain-openai
