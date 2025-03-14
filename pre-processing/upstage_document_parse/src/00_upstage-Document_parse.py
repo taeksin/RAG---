@@ -97,7 +97,7 @@ def process_pdf_with_split(pdf_path, split_threshold=100, batch_size=50):
 if __name__ == "__main__":
     # 사용 예시: PDF 파일이 100페이지 이상이면 분할 후 각각 파싱하고,
     # 분할된 경우 merge_outputs()를 호출하여 최종 MD, HTML, Items 병합 작업을 수행합니다.
-    pdf_file = "pdf/모니터6~7p.pdf"
+    pdf_file = "pdf/20241220_[교재]_연말정산 세무_이석정_한국_회원_3.5시간65~68.pdf"
     results, split_files = process_pdf_with_split(pdf_file, split_threshold=100, batch_size=50)
     
     if split_files:

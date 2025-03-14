@@ -8,7 +8,7 @@ from PDFImageExtractor import PDFImageExtractor
 sys.dont_write_bytecode = True
 
 # Document Parse의 결과를 저장할 폴더 설정
-TEMP_DIR = "pre-processing/upstage_document_parse/temp"
+TEMP_DIR = "01_pre-processing/upstage_document_parse/temp"
 os.makedirs(TEMP_DIR, exist_ok=True)  # temp 폴더가 없으면 생성
 
 def save_files(result, filename):

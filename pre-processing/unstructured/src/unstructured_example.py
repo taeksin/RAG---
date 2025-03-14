@@ -56,7 +56,7 @@ def process_pdf_to_markdown(pdf_path, languages=["kor", "eng"]):
     # JSON 출력: 각 요소를 dict 형태로 변환하여 저장 (분석 결과 확인용)
     json_output = [element.to_dict() for element in elements]
     json_filename = f"{os.path.splitext(os.path.basename(pdf_path))[0]}_elements.json"
-    json_folder = "pre-processing/unstructured/converted_documents"
+    json_folder = "01_pre-processing/unstructured/converted_documents"
     os.makedirs(json_folder, exist_ok=True)
     json_path = os.path.join(json_folder, json_filename)
     with open(json_path, "w", encoding="utf-8") as f:
@@ -65,7 +65,7 @@ def process_pdf_to_markdown(pdf_path, languages=["kor", "eng"]):
     
     # Markdown 생성: 각 요소별로 처리 (헤더 없이 내용만 추가)
     base_filename = os.path.splitext(os.path.basename(pdf_path))[0]
-    images_folder = os.path.join("pre-processing/unstructured/output_images", base_filename)
+    images_folder = os.path.join("01_pre-processing/unstructured/output_images", base_filename)
     os.makedirs(images_folder, exist_ok=True)
     
     md_content = []
@@ -99,7 +99,7 @@ def process_pdf_to_markdown(pdf_path, languages=["kor", "eng"]):
     print(f"⏱️ 총 소요시간: {elapsed_time:.2f}초")
     
     # 최종 Markdown 파일 생성 (각 요소별 Markdown 블록 포함)
-    output_folder = "pre-processing/unstructured/converted_documents"
+    output_folder = "01_pre-processing/unstructured/converted_documents"
     os.makedirs(output_folder, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     output_filename = f"{base_filename}_{timestamp}.md"

@@ -6,6 +6,8 @@ beautifulsoup4
 unstructured
 langchain
 langchain-community
+langchain_community
+langchain_openai
 pdfminer.six==20221105
 pi_heif
 unstructured_inference
@@ -21,3 +23,7 @@ llama-index-embeddings-openai
 llama-parse
 faiss-cpu
 langchain-openai
+streamlit
+plotly
+openpyxl
+

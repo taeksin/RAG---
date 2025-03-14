@@ -65,28 +65,36 @@ def build_metadata_for_element(result, element, html_path):
 def process_element_block(element, content, html_path, result):
     """
     해당 요소(content와 함께)를 하나의 블록으로 생성합니다.
-    메타데이터는 build_metadata_for_element()를 통해 JSON 문자열로 만들어집니다.
-    반환 예시:
+    MD 파일에는 최소한의 메타데이터로 elementId만 포함하고,
+    elementId가 블록의 최상단에 오고 그 아래에 내용이 오도록 합니다.
+    블록 구분자는 블록 사이에 한 줄씩만 추가합니다.
+    
+    예시 출력:
       <<BLOCKEND>>
-      (content)
-      metadata:{ ... }
+      elementId: 3
+      (내용)
       <<BLOCKEND>>
     """
-    metadata = build_metadata_for_element(result if result else {}, element, html_path)
-    metadata_str = "metadata:" + json.dumps(metadata, indent=2, ensure_ascii=False)
+    # 최소한의 메타데이터: elementId만 추가
+    elem_id = element.get("id", "")
+    minimal_meta = f"elementId: {elem_id}" if elem_id else ""
+    
     block_lines = []
+    if minimal_meta:
+        block_lines.append(minimal_meta)
     if content:
         block_lines.append(content)
-    block_lines.append(metadata_str)
-    block = "<<BLOCKEND>>\n" + "\n".join(block_lines) + "\n<<BLOCKEND>>"
+    # 블록 구분자는 각 블록의 끝에 단 한 번만 추가
+    block = "\n".join(block_lines) + "\n<<BLOCKEND>>"
     return block
 
 def html_to_md(html_path, images_paths, result=None):
     """
     HTML 파일을 MD 파일로 변환합니다.
     각 최상위 HTML 요소에서 텍스트나 이미지 내용을 추출하고,
-    해당 요소의 data-page와 id를 메타데이터로 결합한 후 하나의 블록으로 만듭니다.
-    최종 MD 파일은 연속된 <<BLOCKEND>>와 불필요한 빈 줄이 제거된 상태로 저장됩니다.
+    해당 요소의 data-page와 id를 최소한의 메타데이터 (elementId)로 결합하여 블록으로 만듭니다.
+    최종 MD 파일은 각 블록이 한 줄의 <<BLOCKEND>>로 구분되며, 
+    원래의 전체 메타데이터는 별도의 JSON 파일({파일명}_metadata.json)로 저장됩니다.
     """
     if not os.path.exists(html_path):
         print(f"❌ HTML 파일을 찾을 수 없습니다: {html_path}")
@@ -100,14 +108,21 @@ def html_to_md(html_path, images_paths, result=None):
 
     id_map = build_id_image_map(images_paths)
     blocks = []
+    metadata_all = {}  # 전체 메타데이터 저장 (key: elementId)
 
     def get_text_content(element):
         text = element.get_text(separator="\n")
         text = re.sub(r'\n\s*\n+', '\n\n', text)
         return text.strip()
 
-    # 각 요소별로 처리하여 하나의 블록으로 생성
+    # 각 최상위 요소 처리
     for elem in body.find_all(recursive=False):
+        # 원래의 전체 메타데이터 생성 및 저장
+        metadata = build_metadata_for_element(result if result else {}, elem, html_path)
+        element_id = metadata.get("elementId")
+        if element_id:
+            metadata_all[element_id] = metadata
+
         tagname = elem.name.lower()
         content = ""
         if tagname in ["p", "header", "h1", "h2", "h3", "h4", "h5", "h6"]:
@@ -115,7 +130,6 @@ def html_to_md(html_path, images_paths, result=None):
             block = process_element_block(elem, content, html_path, result)
             blocks.append(block)
         elif tagname == "br":
-            # br 태그는 별도의 블록으로 처리하지 않음
             continue
         elif tagname == "table":
             md_table = parse_html_table_to_md(elem)
@@ -131,12 +145,10 @@ def html_to_md(html_path, images_paths, result=None):
             if caption:
                 cap_text = caption.get_text(strip=True)
                 if cap_text:
-                    # 캡션은 별도 블록 없이 기존 블록에 바로 추가
                     blocks[-1] = blocks[-1].replace("<<BLOCKEND>>", f"**{cap_text}**\n<<BLOCKEND>>", 1)
             elem_id = elem.get("id")
             if elem_id and elem_id in id_map:
                 rel_path = convert_to_relative_path(id_map[elem_id], html_path)
-                # 이미지 삽입도 동일 블록에 추가
                 blocks[-1] = blocks[-1].replace("<<BLOCKEND>>", f"![id_{elem_id}]({rel_path})\n<<BLOCKEND>>", 1)
         elif tagname == "img":
             src = elem.get("src", "")
@@ -192,15 +204,23 @@ def html_to_md(html_path, images_paths, result=None):
             block = process_element_block(elem, content, html_path, result)
             blocks.append(block)
 
-    # 최종 MD 파일 생성: blocks 리스트를 줄바꿈으로 합침
-    final_md = "\n\n".join(blocks)
+    # 최종 MD 파일 생성: 각 블록을 한 줄의 <<BLOCKEND>>로 구분하여 연결
+    final_md = "\n".join(blocks)
     out_md_path = html_path.replace(".html", "_converted.md")
     with open(out_md_path, "w", encoding="utf-8") as f:
         f.write(final_md)
 
     print(f"✅ HTML -> MD 변환 완료: {out_md_path}")
+
+    # 별도의 metadata JSON 파일 생성: {파일명}_metadata.json (키는 elementId)
+    base_filename = os.path.splitext(os.path.basename(html_path))[0]
+    metadata_json_path = os.path.join(os.path.dirname(html_path), f"{base_filename}_metadata.json")
+    with open(metadata_json_path, "w", encoding="utf-8") as f:
+        json.dump(metadata_all, f, indent=2, ensure_ascii=False)
+    print(f"✅ Metadata JSON 저장 완료: {metadata_json_path}")
+
     return out_md_path
 
 if __name__ == "__main__":
-    # 예시: 인자로 HTML 파일, 이미지 경로 리스트, 그리고 result JSON (여기서는 result는 사용하지 않음) 전달
+    # 예시: 인자로 HTML 파일, 이미지 경로 리스트, 그리고 result JSON 전달
     html_to_md("path/to/your_file.html", ["path/to/image1.png", "path/to/image2.png"], result={})

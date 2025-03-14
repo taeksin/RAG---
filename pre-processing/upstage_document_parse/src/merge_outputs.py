@@ -40,7 +40,7 @@ def merge_outputs(results, split_files, original_pdf_path):
     merged_items.sort(key=lambda x: x[0])
     
     # 병합 결과물을 저장할 폴더 생성 (원본 PDF의 base name 사용)
-    TEMP_DIR = os.path.join("pre-processing", "upstage_document_parse", "temp")
+    TEMP_DIR = os.path.join("01_pre-processing", "upstage_document_parse", "temp")
     original_basename = os.path.splitext(os.path.basename(original_pdf_path))[0]
     timestamp = datetime.now().strftime("%y%m%d-%H-%M")
     merged_folder = os.path.join(TEMP_DIR, f"{timestamp}_{original_basename}")
@@ -108,8 +108,8 @@ def merge_outputs(results, split_files, original_pdf_path):
 #     # 테스트용 예시 (실제 사용 시 process_pdf_with_split() 등에서 인자로 전달)
 #     # 예시:
 #     # results = [
-#     #    ({"html": "pre-processing/upstage_document_parse/temp/[DP]_20241220_..._1~50.html"}, []),
-#     #    ({"html": "pre-processing/upstage_document_parse/temp/[DP]_20241220_..._51~100.html"}, [])
+#     #    ({"html": "01_pre-processing/upstage_document_parse/temp/[DP]_20241220_..._1~50.html"}, []),
+#     #    ({"html": "01_pre-processing/upstage_document_parse/temp/[DP]_20241220_..._51~100.html"}, [])
 #     # ]
 #     # split_files = ["pdf/sample_1~50.pdf", "pdf/sample_51~100.pdf"]
 #     # merge_outputs(results, split_files, "pdf/sample.pdf")

@@ -19,7 +19,7 @@ def split_markdown_file(file_path, chunk_size=500, chunk_overlap=100):
     blocks = text.split("<<BLOCKEND>>")
     final_chunks = []
 
-    # 블록 내부 추가 분할을 위한 splitter
+    # 2차 분할: 블록 내부 추가 분할을 위한 splitter
     sub_splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
@@ -70,5 +70,5 @@ def process_folder(folder_path, chunk_size=500, chunk_overlap=100):
     return results
 
 if __name__ == "__main__":
-    folder_path = "pre-processing/upstage_document_parse/temp/250312-18-33_20241220_[교재]_연말정산 세무_이석정_한국_회원_3.5시간65~68"
+    folder_path = "01_pre-processing/upstage_document_parse/temp/250313-17-20_20241220_[교재]_연말정산 세무_이석정_한국_회원_3.5시간65~68"
     process_folder(folder_path)

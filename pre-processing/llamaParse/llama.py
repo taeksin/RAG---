@@ -43,14 +43,14 @@ if not json_list:
 # 저장 파일명: {YYMMDD_HHMM}_{원본PDF파일명}_parsed.json
 time_prefix = datetime.now().strftime("%y%m%d_%H%M")
 base_name = os.path.splitext(os.path.basename(pdf_path))[0]
-json_output_path = os.path.join("pre-processing/llamaParse/output", f"{time_prefix}_{base_name}_parsed.json")
+json_output_path = os.path.join("01_pre-processing/llamaParse/output", f"{time_prefix}_{base_name}_parsed.json")
 os.makedirs(os.path.dirname(json_output_path), exist_ok=True)
 with open(json_output_path, "w", encoding="utf-8") as f:
     json.dump(json_list, f, ensure_ascii=False, indent=2)
 print(f"✅ PDF 변환 완료! JSON 파일 저장됨: {json_output_path}")
 
 # json_to_md.py를 호출하여 JSON을 MD로 변환 (출력 폴더는 "llamaParse/output"로 지정)
-output_dir = "pre-processing/llamaParse/output"
+output_dir = "01_pre-processing/llamaParse/output"
 json_to_md(json_output_path, pdf_path, output_dir)
 
 elapsed_time = time.time() - start_time

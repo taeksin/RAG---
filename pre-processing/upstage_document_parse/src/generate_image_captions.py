@@ -53,7 +53,7 @@ def get_image_caption(image_path, api_key, prompt_context=""):
     
     # 프롬프트 구성: 전달받은 prompt_context(해당 페이지의 내용)를 포함
     prompt = (
-        "너는 이미지를 분석하고 이미지에 대한 설명을 해주는 어시스턴트야. "
+        "너는 이미지를 분석하고 이미지에 대한 설명을 해주는 어시스턴트야. 인사말이나 이미지와 관련없는 말은 하지마 예를 들면(이미지를 분석한 내용은 다음과 같습니다) 이런거 하지마"
         "대답은 무조건 한국어로 해야 하며, 이미지를 보고 알아낼 수 있는 모든 정보를 정밀하게 분석한 후 대답해.\n"
         "이미지가 표라면 읽어서 마크다운으로 만들어줘야해"
         + (f"아래는 해당 이미지가 있던 페이지의 내용이야:\n{prompt_context}" if prompt_context else "")
@@ -115,5 +115,5 @@ if __name__ == "__main__":
         raise ValueError("환경 변수가 설정되지 않았습니다. .env 파일을 확인하세요.")
     
     # 테스트용 base_folder (사용자가 직접 지정)
-    base_folder = "pre-processing/upstage_document_parse/temp/250312-16-38_모니터6~7p"
+    base_folder = "01_pre-processing/upstage_document_parse/temp/250312-16-38_모니터6~7p"
     generate_captions(OPENAI_API_KEY, base_folder)
