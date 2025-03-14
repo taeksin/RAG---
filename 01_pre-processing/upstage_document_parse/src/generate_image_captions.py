@@ -115,5 +115,5 @@ if __name__ == "__main__":
         raise ValueError("환경 변수가 설정되지 않았습니다. .env 파일을 확인하세요.")
     
     # 테스트용 base_folder (사용자가 직접 지정)
-    base_folder = "01_pre-processing/upstage_document_parse/temp/250312-16-38_모니터6~7p"
+    base_folder = "01_pre-processing/upstage_document_parse/temp/250314-15-20_[교재]_연말정산 세무_이석정_한국_회원_3.5시간"
     generate_captions(OPENAI_API_KEY, base_folder)

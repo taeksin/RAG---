@@ -64,17 +64,26 @@ def preprocess_pdf(filename):
         print(error_msg)
         return {}, []
 
-def process_pdf_with_split(pdf_path, split_threshold=100, batch_size=50):
+def process_pdf_with_split(pdf_path):
     """
     PDF 페이지 수가 split_threshold 이상이면 batch_size 단위로 분할하여 각각 파싱하고,
     결과와 분할된 PDF 파일 리스트를 반환합니다.
     
     분할된 파일들이 많을 경우, 현재 컴퓨터의 CPU 코어 수의 절반까지 비동기로 실행합니다.
+    각 분할 파일의 result JSON은 원래 페이지 번호가 1부터 시작하므로,
+    파일명에서 시작 페이지 번호를 파싱하여 result JSON의 "pages"와 (숫자인 경우) "elementId"를 보정합니다.
     """
+    import fitz
+    import json
+    import os
+    import concurrent.futures
+
     doc = fitz.open(pdf_path)
     total_pages = len(doc)
     doc.close()
-
+    split_threshold = 100
+    batch_size = 50
+    
     if total_pages > split_threshold:
         print(f"PDF 페이지 수({total_pages})가 {split_threshold}를 초과하여, {batch_size}페이지씩 분할합니다.")
         split_files = split_pdf(pdf_path, batch_size=batch_size)
@@ -94,13 +103,15 @@ def process_pdf_with_split(pdf_path, split_threshold=100, batch_size=50):
         print(f"PDF 페이지 수({total_pages})가 {split_threshold} 이하이므로 단일 파일로 파싱합니다.")
         return [preprocess_pdf(pdf_path)], []
 
+
 if __name__ == "__main__":
     # 사용 예시: PDF 파일이 100페이지 이상이면 분할 후 각각 파싱하고,
     # 분할된 경우 merge_outputs()를 호출하여 최종 MD, HTML, Items 병합 작업을 수행합니다.
-    pdf_file = "pdf/20241220_[교재]_연말정산 세무_이석정_한국_회원_3.5시간65~68.pdf"
-    results, split_files = process_pdf_with_split(pdf_file, split_threshold=100, batch_size=50)
+    pdf_file = "pdf/모니터1~3p.pdf"
+    results, split_files = process_pdf_with_split(pdf_file)
     
     if split_files:
+        # merged_md_path, merged_html_path, merged_items_folder = merge_outputs(results, split_files, pdf_file)
         merged_md_path, merged_html_path, merged_items_folder = merge_outputs(results, split_files, pdf_file)
         print("최종 병합 결과:")
         print("MD:", merged_md_path)

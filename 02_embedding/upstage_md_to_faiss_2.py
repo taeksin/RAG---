@@ -74,7 +74,7 @@ def main():
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise ValueError("ERROR: OPENAI_API_KEY가 .env 파일에 설정되어 있지 않습니다.")
-    FOLDER_PATH=r"C:\Users\yoyo2\fas\RAG_Pre_processing\01_pre-processing\upstage_document_parse\temp\250314-13-30_20241220_[교재]_연말정산 세무_이석정_한국_회원_3.5시간65~68"
+    FOLDER_PATH=r"C:\Users\yoyo2\fas\RAG_Pre_processing\01_pre-processing\upstage_document_parse\temp\250314-14-42_20241220_[교재]_연말정산 세무_이석정_한국_회원_3.5시간65~68"
     # OpenAI 임베딩 모델 객체 생성 (원하는 모델명으로 교체 가능)
     # 모델 이름이 "text-embedding-3-small"이면, 실제 호출은 "text-embedding-3-small" API를 사용합니다.
     embedding_model = OpenAIEmbeddings(

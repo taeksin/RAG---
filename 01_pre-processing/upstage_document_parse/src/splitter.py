@@ -2,7 +2,7 @@ import os
 import re
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-def split_markdown_file(file_path, chunk_size=500, chunk_overlap=100):
+def split_markdown_file(file_path):
     """
     Markdown 파일을 `<<BLOCKEND>>` 단위로 분할하고, 
     각 블록을 유지하되 너무 긴 경우 내부적으로 추가 분할하는 함수.
@@ -12,8 +12,17 @@ def split_markdown_file(file_path, chunk_size=500, chunk_overlap=100):
     :param chunk_overlap: 인접 청크 간 중첩 문자 수 (기본 100)
     :return: 블록 단위로 분할된 리스트
     """
+    chunk_size=500
+    chunk_overlap=100
+    remove_element_id=True
+    remove_element_id=False
     with open(file_path, "r", encoding="utf-8") as f:
         text = f.read()
+    
+    # 옵션에 따라 "elementId:"로 시작하는 줄 제거
+    if remove_element_id:
+        print("elementId를 지우겠습니다")
+        text = "\n".join([line for line in text.splitlines() if not line.strip().startswith("elementId:")])
     
     # 1차 분할: `<<BLOCKEND>>` 기준으로 블록 분할
     blocks = text.split("<<BLOCKEND>>")
@@ -44,7 +53,7 @@ def split_markdown_file(file_path, chunk_size=500, chunk_overlap=100):
 
     return final_chunks
 
-def process_folder(folder_path, chunk_size=500, chunk_overlap=100):
+def process_folder(folder_path):
     """
     입력된 폴더 내에서 `_converted.md`로 끝나는 모든 파일을 찾아 분할 후,
     각 파일에 대해 `_split.md` 파일로 저장하는 함수.
@@ -57,18 +66,18 @@ def process_folder(folder_path, chunk_size=500, chunk_overlap=100):
     results = {}
     for file_path in md_files:
         print(f"Processing file: {file_path}")
-        chunks = split_markdown_file(file_path, chunk_size, chunk_overlap)
+        chunks = split_markdown_file(file_path)
         results[file_path] = chunks
 
         # `_split.md`로 저장
         output_file = file_path.replace("_converted.md", "_split.md")
         with open(output_file, "w", encoding="utf-8") as f:
             for chunk in chunks:
-                f.write(chunk + "\n\n<<SPLIT>>\n\n")
+                f.write(chunk + "\n\n<<BLOCKEND>>\n\n")
         print(f"  → {len(chunks)}개의 블록 생성됨. 저장: {output_file}")
 
     return results
 
 if __name__ == "__main__":
-    folder_path = "01_pre-processing/upstage_document_parse/temp/250313-17-20_20241220_[교재]_연말정산 세무_이석정_한국_회원_3.5시간65~68"
+    folder_path = "01_pre-processing/upstage_document_parse/temp/250314-15-20_[교재]_연말정산 세무_이석정_한국_회원_3.5시간"
     process_folder(folder_path)

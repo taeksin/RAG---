@@ -15,7 +15,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 # -----------------------------
 # 상수 설정
 # -----------------------------
-VDB_INDEX_PATH = "vdb/faiss_index/small/4_upstage_layout"  # FAISS 인덱스 경로
+VDB_INDEX_PATH = "vdb/faiss_index/small/2_N글자나누기+all"  # FAISS 인덱스 경로
 
 # -----------------------------
 # 시각화 함수들 (2D/3D)

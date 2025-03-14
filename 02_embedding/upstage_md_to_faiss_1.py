@@ -74,7 +74,7 @@ def main():
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise ValueError("ERROR: OPENAI_API_KEY가 .env 파일에 설정되어 있지 않습니다.")
-    
+    FOLDER_PATH=r"C:\Users\yoyo2\fas\RAG_Pre_processing\01_pre-processing\upstage_document_parse\temp\250314-14-42_20241220_[교재]_연말정산 세무_이석정_한국_회원_3.5시간65~68"
     # OpenAI 임베딩 모델 객체 생성 (원하는 모델명으로 교체 가능)
     # 모델 이름이 "text-embedding-3-small"이면, 실제 호출은 "text-embedding-3-small" API를 사용합니다.
     embedding_model = OpenAIEmbeddings(
@@ -83,17 +83,17 @@ def main():
     )
     
     # 사용자가 임베딩할 폴더 경로 입력
-    folder_path = input("임베딩할 폴더의 경로를 입력하세요: ").strip()
+    folder_path = FOLDER_PATH
     
-    # _merged.md 파일 찾기
+    # _split.md 파일 찾기
     md_file = None
     for fname in os.listdir(folder_path):
-        if fname.endswith("_merged.md"):
+        if fname.endswith("_split.md"):
             md_file = os.path.join(folder_path, fname)
             break
     if not md_file:
-        raise FileNotFoundError("ERROR: _merged.md 파일을 찾을 수 없습니다.")
-    print(f"[main] _merged.md 파일 경로: {md_file}")
+        raise FileNotFoundError("ERROR: _split.md 파일을 찾을 수 없습니다.")
+    print(f"[main] _split.md 파일 경로: {md_file}")
     
     # _metadata.json 파일 로드
     metadata_json = load_metadata_json(folder_path)

@@ -50,11 +50,11 @@ def merge_captions_into_md(base_folder):
     with open(merged_md_file, "w", encoding="utf-8") as f:
         f.writelines(merged_lines)
     
-    # 원본 _converted.md 파일 삭제
-    os.remove(md_file)
+    # # 원본 _converted.md 파일 삭제
+    # os.remove(md_file)
     
     return merged_md_file
 
 if __name__ == "__main__":
-    base_folder = "01_pre-processing/upstage_document_parse/temp/250312-18-12_모니터6~7p"
+    base_folder = "01_pre-processing/upstage_document_parse/temp/250314-14-42_20241220_[교재]_연말정산 세무_이석정_한국_회원_3.5시간65~68"
     merge_captions_into_md(base_folder)

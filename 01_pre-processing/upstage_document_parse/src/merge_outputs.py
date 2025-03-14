@@ -22,7 +22,7 @@ def merge_outputs(results, split_files, original_pdf_path):
     # 각 결과에서 HTML 파일 경로를 기준으로 시작 페이지를 추출하여 정렬합니다.
     merged_items = []  # (start_page, file_paths) 튜플 목록
     for res in results:
-        file_paths, _ = res
+        file_paths = res[0]
         html_path = file_paths.get("html")
         if html_path:
             # 예시 파일명: YYYYMMDD_..._1~50.html
