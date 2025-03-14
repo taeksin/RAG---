@@ -26,4 +26,4 @@ langchain-openai
 streamlit
 plotly
 openpyxl
-
+xlsxwriter
