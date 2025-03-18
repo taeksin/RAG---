@@ -18,20 +18,20 @@ from sklearn.metrics.pairwise import cosine_similarity
 db_options = {
     "DB 1": {
         "path": "vdb/faiss_index/small/01_upstageLayout",
-        "description": "upstage에서 나눠준 layout사용"
+        "description": "upstage에서 나눠준 그대로 layout사용"
     },
     "DB 2": {
-        "path": "vdb/faiss_index/small/02_upstageLayout_overlap",
-        "description": "upstage에서 나눠준 layout에 Overlap(100)"
+        "path": "vdb/faiss_index/small/02_upstageLayout_overlap_1",
+        "description": "upstageLayout에 직전 블록까지만 overlap"
     },
     "DB 3": {
-        "path": "vdb/faiss_index/small/03_Nsplit",
-        "description": "그냥 N글자로 나눔 Chunk:500, Overlap:100"
+        "path": "vdb/faiss_index/small/03_upstageLayout_overlap_2",
+        "description": "upstageLayout에 overlap만큼 채워질 때 까지 이전 내용 가져옴"
     },
-    # "DB 4": {
-    #     "path": "vdb/faiss_index/small/4_upstage_layout+all",
-    #     "description": "upstage에서 나눠준 layout사용 + 표같은 붙을건 붙음"
-    # }
+    "DB 4": {
+        "path": "vdb/faiss_index/small/04_Nsplit",
+        "description": "그냥 텍스트에서 Chunk(500), Overlap(100)"
+    }
 }
 
 # -----------------------------
@@ -132,7 +132,12 @@ def main():
                     - `similarity_search_with_score()` 반환값.  
                     - 주로 IndexFlatL2이면 L2 거리(혹은 그 제곱)를 반환 → **범위**: [0, ∞).  
                     - 만약 IndexFlatIP(내적) 등을 쓴다면 값 범위가 달라질 수 있음(음수가 될 수도 있음).
+                    ---
+                    **시각화**
+                    - 각 점은 원본 텍스트의 앞 15글자를 표시합니다.
+                    - 2D와 3D를 지원합니다 탭을 바꿔서 확인 하실 수 있습니다.
                     """)
+                
     
     # 선택된 DB에 따른 vdb 경로 설정
     vdb_index_path = db_options[selected_db]["path"]
@@ -183,6 +188,7 @@ def main():
                     rows.append({
                         "l2_distance": l2_dist,
                         "cosine_sim": cos_sim,
+                        # "faiss_score": faiss_score,
                         "content": doc.page_content,
                         "metadata": doc.metadata,
                     })
