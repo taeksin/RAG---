@@ -7,6 +7,7 @@ import re
 from dotenv import load_dotenv
 from openai import OpenAI
 from tqdm import tqdm
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 def load_result(base_folder):
     """
@@ -53,10 +54,10 @@ def get_image_caption(image_path, api_key, prompt_context=""):
     
     # 프롬프트 구성: 전달받은 prompt_context(해당 페이지의 내용)를 포함
     prompt = (
-        "너는 이미지를 분석하고 이미지에 대한 설명을 해주는 어시스턴트야. 인사말이나 이미지와 관련없는 말은 하지마 예를 들면(이미지를 분석한 내용은 다음과 같습니다) 이런거 하지마"
+        "너는 이미지를 분석하고 이미지에 대한 설명을 해주는 어시스턴트야. 인사말이나 이미지와 관련없는 말은 하지마 예를 들면(이미지를 분석한 내용은 다음과 같습니다) 이런거 하지마. "
         "대답은 무조건 한국어로 해야 하며, 이미지를 보고 알아낼 수 있는 모든 정보를 정밀하게 분석한 후 대답해.\n"
-        "이미지가 표라면 읽어서 마크다운으로 만들어줘야해"
-        + (f"아래는 해당 이미지가 있던 페이지의 내용이야:\n{prompt_context}" if prompt_context else "")
+        "이미지가 표라면 읽어서 마크다운으로 만들어줘야해, 표에 병합된 부분이 있다면 병합을 풀때 내용이 누락되지 않도록 해당되는 모든 셀에 내용을 작성해야해 하나만 작성하면 안돼, 답변을 작성하기전에 반드시 한번 더 검토해보고나서 답변을 만들어"
+        + (f"\n아래는 해당 이미지가 있던 페이지의 내용이야:\n{prompt_context}" if prompt_context else "")
     )
     
     messages = [
@@ -76,6 +77,22 @@ def get_image_caption(image_path, api_key, prompt_context=""):
     except Exception as e:
         return ""
 
+def process_image_file(filename, items_folder, page_context_map, api_key):
+    """
+    개별 이미지 파일을 처리하여 캡션을 생성하고, 결과를 파일에 저장합니다.
+    """
+    if not filename.lower().endswith(".png"):
+        return
+    image_path = os.path.join(items_folder, filename)
+    # 파일명에서 "_page_"와 그 뒤의 "_" 사이의 숫자를 추출 (예: "3_page_1_figure_1.png" → 페이지 번호 1)
+    match = re.search(r'_page_(\d+)_', filename)
+    page_num = int(match.group(1)) if match else None
+    prompt_context = page_context_map.get(page_num, "") if page_num is not None else ""
+    caption = get_image_caption(image_path, api_key, prompt_context)
+    caption_filename = os.path.join(items_folder, f"{os.path.splitext(filename)[0]}_caption.txt")
+    with open(caption_filename, "w", encoding="utf-8") as f:
+        f.write(caption)
+
 def generate_captions(api_key, base_folder):
     """
     api_key: OPENAI API 키
@@ -92,20 +109,18 @@ def generate_captions(api_key, base_folder):
     if not os.path.exists(items_folder):
         print(f"Items 폴더가 존재하지 않습니다: {items_folder}")
         return
+
+    # Items 폴더 내의 png 파일들만 처리 (동시처리)
+    filenames = [fname for fname in os.listdir(items_folder) if fname.lower().endswith(".png")]
     
-    # Items 폴더 내의 png 파일들만 처리 (tqdm 진행 표시)
-    for filename in tqdm(os.listdir(items_folder), desc="이미지 캡션 생성"):
-        if not filename.lower().endswith(".png"):
-            continue
-        image_path = os.path.join(items_folder, filename)
-        # 파일명에서 "_page_"와 그 뒤의 "_" 사이의 숫자를 추출 (예: "3_page_1_figure_1.png" → 페이지 번호 1)
-        match = re.search(r'_page_(\d+)_', filename)
-        page_num = int(match.group(1)) if match else None
-        prompt_context = page_context_map.get(page_num, "") if page_num is not None else ""
-        caption = get_image_caption(image_path, api_key, prompt_context)
-        caption_filename = os.path.join(items_folder, f"{os.path.splitext(filename)[0]}_caption.txt")
-        with open(caption_filename, "w", encoding="utf-8") as f:
-            f.write(caption)
+    # ThreadPoolExecutor를 사용하여 병렬 처리 (적절한 워커 수 선택)
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        futures = []
+        for filename in filenames:
+            futures.append(executor.submit(process_image_file, filename, items_folder, page_context_map, api_key))
+        for future in tqdm(as_completed(futures), total=len(futures), desc="이미지 캡션 생성"):
+            # 각 future의 결과는 None이므로, 단순히 기다림
+            future.result()
     print("이미지 캡션 생성 완료.")
 
 if __name__ == "__main__":
@@ -115,5 +130,5 @@ if __name__ == "__main__":
         raise ValueError("환경 변수가 설정되지 않았습니다. .env 파일을 확인하세요.")
     
     # 테스트용 base_folder (사용자가 직접 지정)
-    base_folder = "01_pre-processing/upstage_document_parse/temp/250314-15-20_[교재]_연말정산 세무_이석정_한국_회원_3.5시간"
+    base_folder = "01_pre-processing/upstage_document_parse/temp/250317-15-53_20241220_[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간"
     generate_captions(OPENAI_API_KEY, base_folder)
