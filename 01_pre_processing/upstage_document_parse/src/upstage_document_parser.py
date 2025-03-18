@@ -21,7 +21,7 @@ from merge_outputs import merge_outputs
 from generate_image_captions import generate_captions
 # merge_markdown_captions 오듈에서 이미지에 캡션을 추가함
 from merge_markdown_captions import merge_captions_into_md
-
+    
 sys.dont_write_bytecode = True
 load_dotenv()
 UPSTAGE_API_KEY, OPENAI_API_KEY = map(os.getenv, ["UPSTAGE_API_KEY", "OPENAI_API_KEY"])
@@ -34,7 +34,7 @@ BASE_FOLDER = None
 
 def preprocess_pdf(filename):
     """
-    PDF 파일을 Upstage Document Parse API를 사용하여 분석하고 결과를 temp 폴더에 저장한 뒤,
+    PDF 파일을 Upstage Document Parse API를 사용하여 분석하고 결과를 data 폴더에 저장한 뒤,
     그 HTML 파일을 MD로 변환하고, base_folder를 전역 변수에 저장합니다.
     """
     global BASE_FOLDER
@@ -77,10 +77,7 @@ def process_pdf_with_split(pdf_path):
     각 분할 파일의 result JSON은 원래 페이지 번호가 1부터 시작하므로,
     파일명에서 시작 페이지 번호를 파싱하여 result JSON의 "pages"와 (숫자인 경우) "elementId"를 보정합니다.
     """
-    import fitz
-    import json
-    import os
-    import concurrent.futures
+    
 
     doc = fitz.open(pdf_path)
     total_pages = len(doc)
@@ -127,8 +124,11 @@ def upstage_document_parse(pdf_file_path):
     generate_captions(OPENAI_API_KEY, BASE_FOLDER) 
     merge_captions_into_md(BASE_FOLDER)
     
+    # 오류가 없었다면 저장된 파일의 폴더경로를 반환함
+    return BASE_FOLDER
+    
 
 if __name__ == "__main__":
-    pdf_file_path = "pdf/20241220_[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간.pdf"
+    pdf_file_path = "pdf/모니터1p.pdf"
     upstage_document_parse(pdf_file_path)
         

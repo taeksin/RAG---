@@ -8,8 +8,8 @@ from PDFImageExtractor import PDFImageExtractor
 sys.dont_write_bytecode = True
 
 # Document Parse의 결과를 저장할 폴더 설정
-TEMP_DIR = "01_pre_processing/upstage_document_parse/temp"
-os.makedirs(TEMP_DIR, exist_ok=True)  # temp 폴더가 없으면 생성
+DATA_DIR = "data"
+os.makedirs(DATA_DIR, exist_ok=True)  # data 폴더가 없으면 생성
 
 def save_files(result, filename):
     """
@@ -24,12 +24,14 @@ def save_files(result, filename):
 
     # base_filename, base_folder 설정
     base_filename = date_str + "_" + os.path.splitext(os.path.basename(filename))[0]
-    base_folder = os.path.join(TEMP_DIR, base_filename)
+    base_folder = os.path.join(DATA_DIR, base_filename)
     os.makedirs(base_folder, exist_ok=True)
 
     file_paths = {}    # HTML/MD/TXT 파일 경로들
     images_paths = []  # 크롭된 이미지 경로들
-
+    
+    print("upstage의 결과를 저장합니다.")
+    
     # 1) HTML 저장 (수정: elements의 "page" 정보를 각 태그에 추가)
     if "html" in content and content["html"]:
         html_str = content["html"]
@@ -48,7 +50,7 @@ def save_files(result, filename):
         with open(html_path, "w", encoding="utf-8") as f:
             f.write(modified_html)
         file_paths["html"] = html_path
-        print(f"✅ HTML 저장 완료: {html_path}")
+        print(f"-✅ HTML 저장 완료: {html_path}")
     else:
         print("⚠️ HTML 데이터가 비어 있습니다.")
         
@@ -58,7 +60,7 @@ def save_files(result, filename):
         with open(txt_path, "w", encoding="utf-8") as f:
             f.write(content["text"])
         file_paths["txt"] = txt_path
-        print(f"✅ TXT 저장 완료: {txt_path}")
+        print(f"-✅ TXT 저장 완료: {txt_path}")
     else:
         print("⚠️ TXT 데이터가 비어 있습니다.")
 
@@ -68,7 +70,7 @@ def save_files(result, filename):
         with open(md_path, "w", encoding="utf-8") as f:
             f.write(content["markdown"])
         file_paths["md"] = md_path
-        print(f"✅ Markdown 저장 완료: {md_path}")
+        print(f"-✅ Markdown 저장 완료: {md_path}")
     else:
         print("⚠️ Markdown 데이터가 비어 있습니다.")
 
@@ -77,7 +79,7 @@ def save_files(result, filename):
     with open(result_path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
     file_paths["result"] = result_path
-    print(f"✅ API 결과 저장 완료: {result_path}")
+    print(f"-✅ API 결과 저장 완료: {result_path}\n")
 
     # 5) PDF 이미지 크롭
     if elements:
@@ -87,7 +89,7 @@ def save_files(result, filename):
         extractor = PDFImageExtractor(filename, dpi=300)
         images_paths = extractor.extract_elements(elements, crop_folder)  # 리스트 형태로 반환
 
-        print(f"✅ 이미지 크롭 완료! 총 {len(images_paths)}개 파일.")
+        print(f"✅ 이미지 크롭 완료! 총 {len(images_paths)}개.")
     else:
         print("⚠️ API 응답에 elements 정보가 없습니다.")
 

@@ -5,7 +5,7 @@ import shutil
 # 이전의 이전 블록까지 사용하는게 아니라
 # 이전 블록 까지만 사용하도록 SPLIT함
 
-def process_file(file_path):
+def process_file_02(file_path):
     # 1. 파일 경로 및 복사본 파일 설정
     # 파일 경로에서 디렉토리와 파일명을 분리
     dir_name, base_name = os.path.split(file_path)
@@ -71,9 +71,11 @@ def process_file(file_path):
         file.write(modified_content)
 
     # 12. 완료 메시지 출력
-    print(f" -> 오버랩 적용 완료: {new_file_path}")
+    # print(f" -> 오버랩 적용 완료: {new_file_path}")
+    
+    return new_file_path
 
 # 예제 실행 코드 (스크립트 직접 실행 시 동작)
 if __name__ == "__main__":
     file_path = "01_pre_processing/upstage_document_parse/temp/250317-15-53_20241220_[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간/250317-15-53_20241220_[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간_merged.md"
-    process_file(file_path)
+    process_file_02(file_path)

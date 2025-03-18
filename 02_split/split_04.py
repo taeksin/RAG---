@@ -5,7 +5,7 @@ import shutil
 CHUNK_SIZE = 500     # 각 블록의 최대 길이 (청크)
 OVERLAP_SIZE = 100   # 이전 블록에서 가져올 오버랩 길이
 
-def process_file(file_path):
+def process_file_04(file_path):
     """
     지정한 MD 파일을 열어서:
       1. "elementId:"로 시작하는 줄과 "<<BLOCKEND>>" 줄을 삭제
@@ -62,9 +62,11 @@ def process_file(file_path):
     with open(new_file_path, 'w', encoding='utf-8') as file:
         file.write(modified_content)
 
-    print(f"-> 작업 완료: {new_file_path}")
+    # print(f"-> 작업 완료: {new_file_path}")
+    
+    return new_file_path
 
 # 예제 실행 코드
 if __name__ == "__main__":
     file_path = "01_pre_processing/upstage_document_parse/temp/250314-17-45_모니터1~3p/250314-17-45_모니터1~3p_merged.md"
-    process_file(file_path)
+    process_file_04(file_path)

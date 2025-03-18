@@ -25,7 +25,7 @@ def get_overlap_text(parsed_blocks, current_index, overlap_length):
     else:
         return accumulated
 
-def process_file(file_path):
+def process_file_03(file_path):
     """
     지정한 MD 파일을 열어:
       - "elementId:"로 시작하는 줄과 "<<BLOCKEND>>" 줄을 기준으로 이미 블록화되어 있다고 가정하고,
@@ -92,9 +92,11 @@ def process_file(file_path):
     # 9. 최종 수정된 내용을 새 파일에 저장
     with open(new_file_path, 'w', encoding='utf-8') as file:
         file.write(modified_content)
-    print(f"-> 오버랩 적용 완료: {new_file_path}")
+    # print(f"-> 오버랩 적용 완료: {new_file_path}")
+    
+    return new_file_path
 
 # 예제 실행 코드
 if __name__ == "__main__":
     file_path = "01_pre_processing/upstage_document_parse/temp/250317-15-53_20241220_[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간/250317-15-53_20241220_[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간_merged.md"
-    process_file(file_path)
+    process_file_03(file_path)

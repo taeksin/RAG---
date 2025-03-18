@@ -121,7 +121,7 @@ def generate_captions(api_key, base_folder):
         for future in tqdm(as_completed(futures), total=len(futures), desc="이미지 캡션 생성"):
             # 각 future의 결과는 None이므로, 단순히 기다림
             future.result()
-    print("이미지 캡션 생성 완료.")
+    print(f"이미지 캡션 생성 및 저장 완료. -> {base_folder}")
 
 if __name__ == "__main__":
     load_dotenv()
