@@ -48,7 +48,8 @@ def preprocess_pdf(filename):
             "base64_encoding": "['table']",
             "model": "document-parse"
         }
-        print(f"📤 PDF 파일 {filename} 을(를) API에 업로드 중...")
+        print("╔════════════════════════════════════════")
+        print(f"║ 📤 PDF 파일 {filename} 을(를) API에 업로드 중...")
         response = requests.post(url, headers=headers, files=files, data=data)
 
     if response.status_code == 200:

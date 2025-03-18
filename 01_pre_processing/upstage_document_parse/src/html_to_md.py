@@ -210,14 +210,14 @@ def html_to_md(html_path, images_paths, result=None):
     with open(out_md_path, "w", encoding="utf-8") as f:
         f.write(final_md)
 
-    print(f"✅ HTML -> MD 변환 하며 이미지파일명을 추가했습니다:\n    --> {out_md_path}")
+    print(f"║ ✅ HTML -> MD 변환 하며 이미지파일명을 추가했습니다:\n║    --> {out_md_path}")
 
     # 별도의 metadata JSON 파일 생성: {파일명}_metadata.json (키는 elementId)
     base_filename = os.path.splitext(os.path.basename(html_path))[0]
     metadata_json_path = os.path.join(os.path.dirname(html_path), f"{base_filename}_metadata.json")
     with open(metadata_json_path, "w", encoding="utf-8") as f:
         json.dump(metadata_all, f, indent=2, ensure_ascii=False)
-    print(f"✅ Metadata JSON 저장 완료: {metadata_json_path}\n")
+    print(f"║ ✅ Metadata JSON 저장 완료: {metadata_json_path}\n║")
 
     return out_md_path
 
