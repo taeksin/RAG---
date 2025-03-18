@@ -111,7 +111,7 @@ def embedding_md_to_faiss(md_path):
     # 텍스트를 블록으로 분할
     blocks = split_into_blocks(text, delimiter="<<SPLIT>>")
     texts, element_ids = embed_blocks(blocks)
-    print(f"[process_md_file] 분할된 블록 수: {len(blocks)}, 준비된 텍스트 개수: {len(texts)}")
+    # print(f"[process_md_file] 분할된 블록 수: {len(blocks)}, 준비된 텍스트 개수: {len(texts)}")
     
     # Document 리스트 생성
     documents = []

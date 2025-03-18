@@ -30,7 +30,7 @@ def save_files(result, filename):
     file_paths = {}    # HTML/MD/TXT 파일 경로들
     images_paths = []  # 크롭된 이미지 경로들
     
-    print("upstage의 결과를 저장합니다.")
+    print("✅ upstage의 결과를 저장합니다.")
     
     # 1) HTML 저장 (수정: elements의 "page" 정보를 각 태그에 추가)
     if "html" in content and content["html"]:
@@ -50,7 +50,7 @@ def save_files(result, filename):
         with open(html_path, "w", encoding="utf-8") as f:
             f.write(modified_html)
         file_paths["html"] = html_path
-        print(f"-✅ HTML 저장 완료: {html_path}")
+        print(f"  -> HTML 저장 완료: {html_path}")
     else:
         print("⚠️ HTML 데이터가 비어 있습니다.")
         
@@ -60,7 +60,7 @@ def save_files(result, filename):
         with open(txt_path, "w", encoding="utf-8") as f:
             f.write(content["text"])
         file_paths["txt"] = txt_path
-        print(f"-✅ TXT 저장 완료: {txt_path}")
+        print(f"  -> TXT 저장 완료: {txt_path}")
     else:
         print("⚠️ TXT 데이터가 비어 있습니다.")
 
@@ -70,7 +70,7 @@ def save_files(result, filename):
         with open(md_path, "w", encoding="utf-8") as f:
             f.write(content["markdown"])
         file_paths["md"] = md_path
-        print(f"-✅ Markdown 저장 완료: {md_path}")
+        print(f"  -> Markdown 저장 완료: {md_path}")
     else:
         print("⚠️ Markdown 데이터가 비어 있습니다.")
 
@@ -79,7 +79,7 @@ def save_files(result, filename):
     with open(result_path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
     file_paths["result"] = result_path
-    print(f"-✅ API 결과 저장 완료: {result_path}\n")
+    print(f"  -> API 결과 저장 완료: {result_path}\n")
 
     # 5) PDF 이미지 크롭
     if elements:

@@ -6,7 +6,6 @@
 import os
 import sys
 import fitz
-import time
 import requests
 import concurrent.futures
 from dotenv import load_dotenv
@@ -40,7 +39,6 @@ def preprocess_pdf(filename):
     global BASE_FOLDER
     url = "https://api.upstage.ai/v1/document-ai/document-parse"
     headers = {"Authorization": f"Bearer {UPSTAGE_API_KEY}"}
-    start_time = time.time()
 
     with open(filename, "rb") as f:
         files = {"document": f}
@@ -60,8 +58,6 @@ def preprocess_pdf(filename):
         html_path = file_paths.get("html")
         if html_path:
             new_md_path = html_to_md(html_path, images_paths)
-        end_time = time.time()
-        print(f"⏱️_파싱 소요시간: {end_time - start_time:.2f}초\n")
         return file_paths, images_paths, base_folder
     else:
         error_msg = f"❌ API 요청 실패: {response.status_code}, {response.text}"
@@ -101,7 +97,7 @@ def process_pdf_with_split(pdf_path):
                     print(f"{file} 처리 중 예외 발생: {exc}")
         return results, split_files
     else:
-        print(f"PDF 페이지 수({total_pages})가 {split_threshold} 이하이므로 단일 파일로 파싱합니다.")
+        print(f"{pdf_path} 페이지 수({total_pages})가 {split_threshold} 이하이므로 단일 파일로 파싱합니다.\n")
         return [preprocess_pdf(pdf_path)], []
 
 
