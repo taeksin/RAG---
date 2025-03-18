@@ -95,7 +95,7 @@ def main():
         raise ValueError("ERROR: OPENAI_API_KEY가 .env 파일에 설정되어 있지 않습니다.")
     
     # 임베딩할 파일이 있는 폴더 경로를 지정합니다.
-    FOLDER_PATH = r"C:\Users\yoyo2\fas\RAG_Pre_processing\01_pre-processing\upstage_document_parse\temp\250314-17-45_모니터1~3p"
+    FOLDER_PATH = r"C:\Users\yoyo2\fas\RAG_Pre_processing\01_pre_processing\upstage_document_parse\temp\250314-17-45_모니터1~3p"
     folder_path = FOLDER_PATH
 
     # 폴더 내에서 "01_"로 시작하고 "_merged.md"로 끝나는 파일 찾기
