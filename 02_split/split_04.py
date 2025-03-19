@@ -68,5 +68,5 @@ def process_file_04(file_path):
 
 # 예제 실행 코드
 if __name__ == "__main__":
-    file_path = "01_pre_processing/upstage_document_parse/temp/250314-17-45_모니터1~3p/250314-17-45_모니터1~3p_merged.md"
+    file_path = "01_parse/upstage_document_parse/temp/250314-17-45_모니터1~3p/250314-17-45_모니터1~3p_merged.md"
     process_file_04(file_path)

@@ -56,6 +56,6 @@ def merge_captions_into_md(base_folder):
     return merged_md_file
 
 if __name__ == "__main__":
-    base_folder = "01_pre_processing/upstage_document_parse/temp/250314-17-45_모니터1~3p"
+    base_folder = "01_parse/upstage_document_parse/temp/250314-17-45_모니터1~3p"
     merge_captions_into_md(base_folder)
     print("이미지 캡션 추가완료")

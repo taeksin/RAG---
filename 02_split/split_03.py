@@ -98,5 +98,5 @@ def process_file_03(file_path):
 
 # 예제 실행 코드
 if __name__ == "__main__":
-    file_path = "01_pre_processing/upstage_document_parse/temp/250317-15-53_20241220_[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간/250317-15-53_20241220_[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간_merged.md"
+    file_path = "01_parse/upstage_document_parse/temp/250317-15-53_20241220_[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간/250317-15-53_20241220_[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간_merged.md"
     process_file_03(file_path)

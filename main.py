@@ -3,7 +3,7 @@ import sys
 import fitz
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-UPSTAGE_SRC_DIR = os.path.join(CURRENT_DIR, "01_pre_processing", "upstage_document_parse", "src")
+UPSTAGE_SRC_DIR = os.path.join(CURRENT_DIR, "01_parse", "upstage_document_parse", "src")
 SPLIT_DIR = os.path.join(CURRENT_DIR, "02_split")
 EMBEDDING_DIR = os.path.join(CURRENT_DIR, "03_embedding")
 
