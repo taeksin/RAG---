@@ -27,3 +27,4 @@ streamlit
 plotly
 openpyxl
 xlsxwriter
+scikit-learn
