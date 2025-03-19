@@ -84,8 +84,8 @@ def main():
     pdf_folder = "pdf"
     pdf_filenames = [
         "약-6.pdf",
-        "차트2_표1.pdf",
-        "모니터1p.pdf",
+        # "차트2_표1.pdf",
+        # "모니터1p.pdf",
     ]
     pdf_file_paths = [os.path.join(pdf_folder, fname) for fname in pdf_filenames]
     total_pdfs = len(pdf_file_paths)
