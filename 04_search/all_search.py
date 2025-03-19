@@ -131,14 +131,12 @@ def main():
                     **FAISS Score (옵션)**  
                     - `similarity_search_with_score()` 반환값.  
                     - 주로 IndexFlatL2이면 L2 거리(혹은 그 제곱)를 반환 → **범위**: [0, ∞).  
-                    - 만약 IndexFlatIP(내적) 등을 쓴다면 값 범위가 달라질 수 있음(음수가 될 수도 있음).
                     ---
                     **시각화**
                     - 각 점은 원본 텍스트의 앞 15글자를 표시합니다.
                     - 2D와 3D를 지원합니다 탭을 바꿔서 확인 하실 수 있습니다.
                     """)
                 
-    
     # 선택된 DB에 따른 vdb 경로 설정
     vdb_index_path = db_options[selected_db]["path"]
 
@@ -172,23 +170,29 @@ def main():
     if st.button("검색 실행") or query:
         if query.strip():
             try:
+                # FAISS에서 모든 문서를 검색 (전체 개수를 k로 전달)
                 docs_with_score = vectorstore.similarity_search_with_score(query, k=faiss_index_size)
                 st.write(f"**검색 질의:** {query}")
                 st.write(f"**검색 결과:** 전체 {faiss_index_size}개 중 {len(docs_with_score)}개")
 
-                query_emb = embedding_model.embed_documents([query])
-                query_emb = np.array(query_emb)  # shape (1, D)
-
+                # 배치 임베딩: 쿼리와 문서들을 한 번에 임베딩
+                query_emb = embedding_model.embed_documents([query])[0]
+                query_emb = np.array(query_emb)  # shape (D,)
+                
+                # 모든 검색 결과의 문서 내용을 리스트로 추출
+                contents = [doc.page_content for doc, _ in docs_with_score]
+                doc_embeddings = embedding_model.embed_documents(contents)
+                doc_embeddings = np.array(doc_embeddings)  # shape (n, D)
+                
+                # 벡터 연산을 이용해 L2 거리와 코사인 유사도 계산
+                l2_dists = np.linalg.norm(doc_embeddings - query_emb, axis=1)
+                cos_sims = cosine_similarity(doc_embeddings, query_emb.reshape(1, -1)).flatten()
+                
                 rows = []
-                for doc, faiss_score in docs_with_score:
-                    doc_emb = embedding_model.embed_documents([doc.page_content])
-                    doc_emb = np.array(doc_emb)
-                    l2_dist = np.linalg.norm(doc_emb - query_emb)
-                    cos_sim = cosine_similarity(doc_emb, query_emb).flatten()[0]
+                for i, (doc, _) in enumerate(docs_with_score):
                     rows.append({
-                        "l2_distance": l2_dist,
-                        "cosine_sim": cos_sim,
-                        # "faiss_score": faiss_score,
+                        "l2_distance": l2_dists[i],
+                        "cosine_sim": cos_sims[i],
                         "content": doc.page_content,
                         "metadata": doc.metadata,
                     })
@@ -212,26 +216,26 @@ def main():
                 )
 
                 contents_list = df["content"].tolist()
-                doc_embeddings_list = embedding_model.embed_documents(contents_list)
-                doc_embeddings = np.array(doc_embeddings_list)
+                doc_embeddings = embedding_model.embed_documents(contents_list)
+                doc_embeddings = np.array(doc_embeddings)
 
-                tab2d, tab3d = st.tabs(["2D 시각화", "3D 시각화"])
-                with tab2d:
-                    fig_2d = visualize_embeddings_2d(
-                        embeddings_array=doc_embeddings,
-                        texts=contents_list,
-                        query_text=query,
-                        query_embedding=query_emb
-                    )
-                    st.plotly_chart(fig_2d, use_container_width=True)
-                with tab3d:
-                    fig_3d = visualize_embeddings_3d(
-                        embeddings_array=doc_embeddings,
-                        texts=contents_list,
-                        query_text=query,
-                        query_embedding=query_emb
-                    )
-                    st.plotly_chart(fig_3d, use_container_width=True)
+                # tab2d, tab3d = st.tabs(["2D 시각화", "3D 시각화"])
+                # with tab2d:
+                #     fig_2d = visualize_embeddings_2d(
+                #         embeddings_array=doc_embeddings,
+                #         texts=contents_list,
+                #         query_text=query,
+                #         query_embedding=query_emb.reshape(1, -1)
+                #     )
+                #     st.plotly_chart(fig_2d, use_container_width=True)
+                # with tab3d:
+                #     fig_3d = visualize_embeddings_3d(
+                #         embeddings_array=doc_embeddings,
+                #         texts=contents_list,
+                #         query_text=query,
+                #         query_embedding=query_emb.reshape(1, -1)
+                #     )
+                #     st.plotly_chart(fig_3d, use_container_width=True)
             except Exception as e:
                 st.error(f"검색 중 오류가 발생했습니다: {str(e)}")
         else:
