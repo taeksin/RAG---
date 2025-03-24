@@ -112,5 +112,5 @@ def process_pdf_to_markdown(pdf_path, languages=["kor", "eng"]):
     return output_path
 
 if __name__ == "__main__":
-    pdf_file = "pdf/모니터6~7p.pdf"
+    pdf_file = "pdf/차트1_표1.pdf"
     process_pdf_to_markdown(pdf_file)

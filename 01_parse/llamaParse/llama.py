@@ -17,11 +17,29 @@ if not llama_api_key:
     raise ValueError("❌ LLAMA_CLOUD_API_KEY가 설정되지 않았습니다. .env 파일을 확인하세요!")
 
 # 파서 설정
+# parser = LlamaParse(
+#     api_key=llama_api_key,
+#     auto_mode=True,
+#     auto_mode_trigger_on_table_in_page=True,
+#     auto_mode_trigger_on_image_in_page=True
+# )
+
+parsing_instruction = (
+    "테이블(표)가 있다면 마크다운으로 만들어줘 병합된 셀에 대해서는 더 신중하게 분리해줘 답변은 무조건 한국어를 사용해"
+)
+
+# Llama 파서 설정
 parser = LlamaParse(
     api_key=llama_api_key,
     auto_mode=True,
     auto_mode_trigger_on_table_in_page=True,
-    auto_mode_trigger_on_image_in_page=True
+    auto_mode_trigger_on_image_in_page=True,
+    use_vendor_multimodal_model=True,
+    vendor_multimodal_model_name="openai-gpt4o",
+    vendor_multimodal_api_key=os.environ["OPENAI_API_KEY"],
+    result_type="markdown",
+    language="ko",
+    parsing_instruction=parsing_instruction,
 )
 
 # PDF 경로
