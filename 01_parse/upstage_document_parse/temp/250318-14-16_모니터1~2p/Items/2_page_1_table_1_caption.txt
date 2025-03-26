@@ -1,6 +1,0 @@
-```markdown
-| VR을 이용한 EMDR의 양측성 안구운동이 우울증 감소에 미치는 영향에 관한 연구: 모니터와 HMD를 이용한 베타파 비교 연구 |
-| --- |
-| (A Study on the Effects of Bilateral Eye Movement in VR-Based EMDR on Depression Reduction: A Comparative Analysis of Beta Waves Using Monitor and HMD) |
-| 장성복*, 서정호** (Sung-Bok Chang, Jung-Ho Suh) |
-```
