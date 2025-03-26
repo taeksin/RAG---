@@ -17,33 +17,33 @@ if not llama_api_key:
     raise ValueError("❌ LLAMA_CLOUD_API_KEY가 설정되지 않았습니다. .env 파일을 확인하세요!")
 
 # 파서 설정
-# parser = LlamaParse(
-#     api_key=llama_api_key,
-#     auto_mode=True,
-#     auto_mode_trigger_on_table_in_page=True,
-#     auto_mode_trigger_on_image_in_page=True
-# )
-
-parsing_instruction = (
-    "테이블(표)가 있다면 마크다운으로 만들어줘 병합된 셀에 대해서는 더 신중하게 분리해줘 답변은 무조건 한국어를 사용해"
-)
-
-# Llama 파서 설정
 parser = LlamaParse(
     api_key=llama_api_key,
     auto_mode=True,
     auto_mode_trigger_on_table_in_page=True,
-    auto_mode_trigger_on_image_in_page=True,
-    use_vendor_multimodal_model=True,
-    vendor_multimodal_model_name="openai-gpt4o",
-    vendor_multimodal_api_key=os.environ["OPENAI_API_KEY"],
-    result_type="markdown",
-    language="ko",
-    parsing_instruction=parsing_instruction,
+    auto_mode_trigger_on_image_in_page=True
 )
 
+# parsing_instruction = (
+#     "테이블(표)가 있다면 마크다운으로 만들어줘 병합된 셀에 대해서는 더 신중하게 분리해줘 답변은 무조건 한국어를 사용해"
+# )
+
+# # Llama 파서 설정
+# parser = LlamaParse(
+#     api_key=llama_api_key,
+#     auto_mode=True,
+#     auto_mode_trigger_on_table_in_page=True,
+#     auto_mode_trigger_on_image_in_page=True,
+#     use_vendor_multimodal_model=True,
+#     vendor_multimodal_model_name="openai-gpt4o",
+#     vendor_multimodal_api_key=os.environ["OPENAI_API_KEY"],
+#     result_type="markdown",
+#     language="ko",
+#     parsing_instruction=parsing_instruction,
+# )
+
 # PDF 경로
-pdf_path = "pdf/모니터6~7p.pdf"
+pdf_path = "pdf/차트2.pdf"
 
 # PDF 존재 여부 확인
 if not os.path.exists(pdf_path):
@@ -58,6 +58,8 @@ json_list = json_objs[0].get("pages", [])
 if not json_list:
     raise ValueError("❌ 추출된 PDF 페이지 데이터가 없습니다.")
 
+elapsed_time = time.time() - start_time
+print(f"✅ Llama api 소요시간 ({elapsed_time:.2f} 초)")
 # 저장 파일명: {YYMMDD_HHMM}_{원본PDF파일명}_parsed.json
 time_prefix = datetime.now().strftime("%y%m%d_%H%M")
 base_name = os.path.splitext(os.path.basename(pdf_path))[0]
@@ -71,5 +73,5 @@ print(f"✅ PDF 변환 완료! JSON 파일 저장됨: {json_output_path}")
 output_dir = "01_parse/llamaParse/output"
 json_to_md(json_output_path, pdf_path, output_dir)
 
-elapsed_time = time.time() - start_time
-print(f"✅ Markdown 파일 생성 완료! (총 소요시간: {elapsed_time:.2f}초)")
+
+print("✅ Markdown 파일 생성 완료!")

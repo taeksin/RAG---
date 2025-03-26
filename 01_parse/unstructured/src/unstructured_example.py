@@ -42,7 +42,7 @@ def process_pdf_to_markdown(pdf_path, languages=["kor", "eng"]):
     """
     PDF를 Unstructured를 사용하여 분석하고, 각 요소를 Markdown으로 변환하며,
     표, 텍스트, 이미지 정보를 포함하여 요소 단위로 Markdown 블록을 생성합니다.
-    또한, 분석 결과 JSON을 파일로 저장하고, 총 소요시간을 Markdown 파일 마지막에 추가합니다.
+    또한, 분석 결과 JSON을 파일로 저장하고, Unstructured 소요시간을 Markdown 파일 마지막에 추가합니다.
     
     :param pdf_path: 처리할 PDF 파일 경로
     :param languages: OCR에 사용할 언어 리스트 (예: ['kor', 'eng'])
@@ -52,6 +52,10 @@ def process_pdf_to_markdown(pdf_path, languages=["kor", "eng"]):
     
     # languages 인자는 반드시 문자열 리스트여야 함
     elements = partition_pdf(pdf_path, languages=languages)
+    
+    # Unstructured  소요시간 계산
+    elapsed_time = time.time() - start_time
+    print(f"⏱️ Unstructured  소요시간: {elapsed_time:.2f}초")
     
     # JSON 출력: 각 요소를 dict 형태로 변환하여 저장 (분석 결과 확인용)
     json_output = [element.to_dict() for element in elements]
@@ -94,9 +98,7 @@ def process_pdf_to_markdown(pdf_path, languages=["kor", "eng"]):
         
         md_content.append(block_md)
     
-    # 총 소요시간 계산
-    elapsed_time = time.time() - start_time
-    print(f"⏱️ 총 소요시간: {elapsed_time:.2f}초")
+
     
     # 최종 Markdown 파일 생성 (각 요소별 Markdown 블록 포함)
     output_folder = "01_parse/unstructured/converted_documents"
@@ -112,5 +114,5 @@ def process_pdf_to_markdown(pdf_path, languages=["kor", "eng"]):
     return output_path
 
 if __name__ == "__main__":
-    pdf_file = "pdf/차트1_표1.pdf"
+    pdf_file = "pdf/[꿈꾸는라이언]-3.pdf"
     process_pdf_to_markdown(pdf_file)

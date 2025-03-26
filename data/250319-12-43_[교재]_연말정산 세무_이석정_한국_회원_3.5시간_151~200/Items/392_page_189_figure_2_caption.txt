@@ -1,9 +1,0 @@
-\[
-\left\{ 
-\left( 
-\text{산출세액} \times \frac{\text{근로소득금액}}{\text{종합소득금액}} 
-\right) 
-- \text{중소기업 취업자에 대한 소득세 감면세} 
-\right\} 
-\times \frac{\text{경영성과급}}{\text{총급여액}} \times 50\%
-\]
