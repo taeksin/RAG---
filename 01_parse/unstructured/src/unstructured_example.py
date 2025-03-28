@@ -51,7 +51,12 @@ def process_pdf_to_markdown(pdf_path, languages=["kor", "eng"]):
     start_time = time.time()  # 처리 시작 시간 기록
     
     # languages 인자는 반드시 문자열 리스트여야 함
-    elements = partition_pdf(pdf_path, languages=languages)
+    elements = partition_pdf(
+                            pdf_path, 
+                            strategy="hi_res", 
+                            infer_table_structure = True, 
+                            languages=languages
+                            )
     
     # Unstructured  소요시간 계산
     elapsed_time = time.time() - start_time
@@ -114,5 +119,5 @@ def process_pdf_to_markdown(pdf_path, languages=["kor", "eng"]):
     return output_path
 
 if __name__ == "__main__":
-    pdf_file = "pdf/[꿈꾸는라이언]-3.pdf"
+    pdf_file = "pdf/hanhwa 오시리아테마파크.pdf"
     process_pdf_to_markdown(pdf_file)

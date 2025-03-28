@@ -4,9 +4,7 @@ import requests
 import time
 from dotenv import load_dotenv
 from save_files import save_files  
-from html_to_md import html_to_md
 from generate_image_captions import generate_captions
-from merge_markdown_captions import merge_captions_into_md
 
 sys.dont_write_bytecode = True
 load_dotenv()
@@ -50,27 +48,19 @@ def preprocess_pdf(filename):
         file_paths, images_paths, base_folder = save_files(result, filename)
         BASE_FOLDER = base_folder.replace("\\", "/")
         html_path = file_paths.get("html")
-        if html_path:
-            new_md_path = html_to_md(html_path, images_paths)
-        return file_paths, images_paths, base_folder
-    else:
-        error_msg = f"❌ API 요청 실패: {response.status_code}, {response.text}"
-        print(error_msg)
-        return {}, []
+
 
 def upstage_document_parse(pdf_file_path):
-    # 사용 예시: PDF 파일이 100페이지 이상이면 분할 후 각각 파싱하고,
-    # 분할된 경우 merge_outputs()를 호출하여 최종 MD, HTML, Items 병합 작업을 수행합니다.
     
     results = preprocess_pdf(pdf_file_path)
 
-    # 이미지 캡션 생성 및 MD에 캡션 병합
+    # # 이미지 캡션 생성 및 MD에 캡션 병합
     generate_captions(OPENAI_API_KEY, BASE_FOLDER) 
-    merge_captions_into_md(BASE_FOLDER)
+    # merge_captions_into_md(BASE_FOLDER)
     
     # 오류가 없었다면 저장된 파일의 폴더경로를 반환함
     return BASE_FOLDER
 
 if __name__ == "__main__":
-    pdf_file_path = "pdf/[꿈꾸는라이언]-3.pdf"
+    pdf_file_path = "pdf/모니터8p.pdf"
     upstage_document_parse(pdf_file_path)

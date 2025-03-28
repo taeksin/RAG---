@@ -89,10 +89,9 @@ def main():
     # PDF 폴더와 파일명 설정
     pdf_folder = "pdf"
     pdf_filenames = [
-        "9.pdf",
         # "[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간.pdf",
         # "차트2_표1.pdf",
-        # "모니터1p.pdf",
+        "모니터1p.pdf",
     ]
     # 원본 PDF 파일 경로 리스트 생성
     original_pdf_paths = [os.path.join(pdf_folder, fname) for fname in pdf_filenames]

@@ -1,9 +1,9 @@
-# generate_image_captions.py
 import os
 import sys
 import json
 import base64
 import re
+import pandas as pd
 from dotenv import load_dotenv
 from openai import OpenAI
 from tqdm import tqdm
@@ -56,7 +56,7 @@ def get_image_caption(image_path, api_key, prompt_context=""):
     prompt = (
         """
         너는 이미지를 분석하고 이미지에 대한 설명을 해주는 어시스턴트야 오래걸려도 되니까 천천히 생각하면서 정확히 대답해. 인사말이나 이미지와 관련없는 말은 하지마 예를 들면(이미지를 분석한 내용은 다음과 같습니다) 이런거 하지마.
-        대답은 무조건 한국어로 해야 하며, 이미지를 보고 알아낼 수 있는 모든 정보를 정밀하게 분석한 후 대답해.\n
+        대답은 무조건 한국어로 해야 하며, 이미지를 보고 알아낼 수 있는 모든 정보를 정밀하게 분석한 후 대답해.
         이미지가 표라면 읽어서 마크다운으로 만들어줘야해, 표에 병합된 부분이 있다면 병합을 풀때 내용이 누락되지 않도록 해당되는 모든 셀에 내용을 작성해야해 하나만 작성하면 안돼, 
         답변을 작성하기전에 반드시 한번 더 검토해보고나서 답변을 만들어
         내가말한 병합인 경우 병합해제를 하고 답변해야하며 텍스트가 누락되면 안되는걸 명심해.
@@ -97,6 +97,54 @@ def process_image_file(filename, items_folder, page_context_map, api_key):
     with open(caption_filename, "w", encoding="utf-8") as f:
         f.write(caption)
 
+def update_excel_with_captions(base_folder):
+    """
+    base_folder 내에 있는 엑셀 파일(.xlsx)을 열어,
+    각 행의 alt 열에 기록된 이미지 파일명에 해당하는 캡션 파일을 Items 폴더에서 찾아,
+    "이미지설명" 열에 캡션 텍스트를 업데이트합니다.
+    이때 "이미지설명" 열은 NaN 대신 빈 문자열("")이 입력되도록 합니다.
+    """
+    base_name = os.path.basename(os.path.normpath(base_folder))
+    excel_path = os.path.join(base_folder, f"{base_name}.xlsx")
+    items_folder = os.path.join(base_folder, "Items")
+    if not os.path.exists(excel_path):
+        print("엑셀 파일이 존재하지 않습니다.")
+        return
+    
+    df = pd.read_excel(excel_path)
+    # "이미지설명" 열이 없으면 생성하고, 있다면 NaN을 빈 문자열로 채운 후 문자열로 변환
+    if "이미지설명" not in df.columns:
+        df["이미지설명"] = ""
+    else:
+        df["이미지설명"] = df["이미지설명"].fillna("").astype(str)
+    
+    # alt 열이 비어있지 않은 행에 대해 업데이트 시도
+    for idx, row in df.iterrows():
+        alt_val = str(row.get("alt", "")).strip()
+        if alt_val:
+            # alt_val가 콤마로 연결된 여러 파일명인 경우 split 처리
+            img_names = [name.strip() for name in alt_val.split(",")]
+            captions = []
+            for img_name in img_names:
+                # 캡션 파일명: 이미지 파일명에서 확장자를 제거하고 _caption.txt 추가
+                base_img = os.path.splitext(img_name)[0]
+                caption_file = os.path.join(items_folder, f"{base_img}_caption.txt")
+                if os.path.exists(caption_file):
+                    with open(caption_file, "r", encoding="utf-8") as f:
+                        caption_text = f.read().strip()
+                        if caption_text:
+                            captions.append(caption_text)
+            # 캡션들을 줄바꿈(\n)으로 연결하여 "이미지설명" 열에 업데이트
+            if captions:
+                df.at[idx, "이미지설명"] = "\n".join(captions)
+    
+    # 저장하기 전에 "이미지설명" 열의 NaN을 빈 문자열로 다시 한번 채웁니다.
+    df["이미지설명"] = df["이미지설명"].fillna("").astype(str)
+    
+    df.to_excel(excel_path, index=False)
+    print(f"엑셀 파일에 이미지설명 업데이트 완료: {excel_path}")
+
+
 def generate_captions(api_key, base_folder):
     """
     api_key: OPENAI API 키
@@ -117,15 +165,15 @@ def generate_captions(api_key, base_folder):
     # Items 폴더 내의 png 파일들만 처리 (동시처리)
     filenames = [fname for fname in os.listdir(items_folder) if fname.lower().endswith(".png")]
     
-    # ThreadPoolExecutor를 사용하여 병렬 처리 (적절한 워커 수 선택)
     with ThreadPoolExecutor(max_workers=8) as executor:
         futures = []
         for filename in filenames:
             futures.append(executor.submit(process_image_file, filename, items_folder, page_context_map, api_key))
         for future in tqdm(as_completed(futures), total=len(futures), desc="║ 이미지 캡션 생성"):
-            # 각 future의 결과는 None이므로, 단순히 기다림
             future.result()
     print(f"║ 이미지 캡션 생성 및 저장 완료. -> {base_folder}")
+    # 캡션 생성 후 엑셀 파일 업데이트
+    update_excel_with_captions(base_folder)
 
 if __name__ == "__main__":
     load_dotenv()

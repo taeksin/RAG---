@@ -7,6 +7,14 @@ from PIL import Image
 sys.dont_write_bytecode = True
 
 class PDFImageExtractor:
+    def __new__(cls, pdf_file, dpi=300, elements=None, out_dir=None):
+        # 만약 elements와 out_dir이 전달되면, 추출 후 바로 리스트를 반환하도록 함
+        instance = super().__new__(cls)
+        instance.__init__(pdf_file, dpi)
+        if elements is not None and out_dir is not None:
+            return instance.extract_elements(elements, out_dir)
+        return instance
+
     def __init__(self, pdf_file, dpi=300):
         """
         :param pdf_file: PDF 파일 경로 (파일명에 페이지범위가 포함되어 있어야 함, 예: "문서_51~100.pdf")
@@ -60,29 +68,25 @@ class PDFImageExtractor:
         :param page_count: 해당 페이지 내에서 몇 번째 요소인지 (1-based)
         :return: 이미지가 저장된 파일 경로
         """
-        # API 응답의 'id' 필드 추출
         element_id = element.get("id", None)
         if element_id is None:
             element_id = "noid"
 
-        # relative_page: 분할 파일 기준 (API에서는 보통 1부터 시작)
         relative_page = element.get("page", 1)
-        # 글로벌 페이지 번호: 시작 페이지 + (relative_page - 1)
         global_page = self.start_page + relative_page - 1
 
         if "coordinates" not in element or len(element["coordinates"]) < 4:
             print(f"⚠️ 요소의 좌표 정보가 부족합니다. (글로벌 페이지 {global_page})")
             return None
 
-        # 분할 파일에서는 relative_page를 기준으로 페이지 이미지를 가져옴 (0-based 인덱스)
+        # PDF 페이지(0-based 인덱스)에서 이미지 가져오기
         img = self.get_page_image(relative_page - 1)
         page_size = img.size
         crop_coords = self.get_pixel_coordinates(element["coordinates"], page_size)
         cropped_img = img.crop(crop_coords)
 
         category = element.get("category", "unknown").lower()
-
-        # 파일명: {element_id}_page_{global_page}_{category}_{page_count}.png
+        # 파일명 예시: {element_id}_page_{global_page}_{category}_{page_count}.png
         filename = f"{element_id}_page_{global_page}_{category}_{page_count}.png"
         output_path = os.path.join(out_dir, filename)
         
@@ -97,15 +101,12 @@ class PDFImageExtractor:
         :return: 추출된 모든 이미지 경로 리스트
         """
         os.makedirs(out_dir, exist_ok=True)
-        
-        # 페이지별, 카테고리별 순번을 관리할 딕셔너리
-        counts = {}  # key: (relative_page, category) / value: count
+        counts = {}  # (relative_page, category)별 순번 관리
         extracted_image_paths = []
 
         for element in elements:
             category = element.get("category", "").lower()
             if category in ["chart", "table", "figure"]:
-                # relative page (API 결과)
                 page = element.get("page", 1)
                 key = (page, category)
                 counts[key] = counts.get(key, 0) + 1
