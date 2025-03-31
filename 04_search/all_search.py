@@ -119,7 +119,7 @@ def main():
 
     # 상단 제목
     st.title("RAG 임베딩과정 선택지 비교")
-
+    
     # 세부 안내
     st.write("**아래 각 3단계에서 원하는 옵션을 선택하세요**")
     st.write("---")
@@ -142,7 +142,7 @@ def main():
     )
 
     # 라디오 버튼을 가로로 배치 (세로 구분선 포함)
-    col1, col2, col3, col4, col5 = st.columns([2, 0.2, 2, 0.2, 2])
+    col1, col2, col3, col4, col5 = st.columns([2.1, 0.2, 3, 0.2, 3])
 
     with col1:
         st.markdown("##### 임베딩모델")
