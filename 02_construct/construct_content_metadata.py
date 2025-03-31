@@ -67,8 +67,8 @@ def get_neighbor_metadata(df):
     """
     metadata -1 생성 함수 (청크 기반)  
     → 이전청크, 현재청크, 다음청크를 라벨과 함께 결합하고, 
-       각 행의 메타데이터를 JSON 객체로 생성  
-       
+        각 행의 메타데이터를 JSON 객체로 생성  
+
     JSON 객체 형식:
     {
         "elementid": [int],         # 현재 행의 elementid (리스트)
@@ -272,9 +272,12 @@ def construct_embedding_contents(base_folder):
         for meta_id in valid_meta_ids:
             metadata_list = metadata_funcs[meta_id](df)
             filename = f"{content_type_mapping[content_name]}-{meta_id}_{content_name}.xlsx"
-            save_path = os.path.join(base_folder, "before", filename)
-            save_excel(content_list, metadata_list, save_path)
-    print("📁 총 11개의 content|metadata 엑셀 파일이 생성되었습니다.")
+            save_path = os.path.join(base_folder, "before")
+            save_file_path = os.path.join(save_path, filename)
+            save_excel(content_list, metadata_list, save_file_path)
+    print("║ 📁 총 11개의 content|metadata 엑셀 파일이 생성되었습니다.")
+
+    return save_path
 
 if __name__ == "__main__":
     base_folder = "data/250331-13-24_모니터1~3p"

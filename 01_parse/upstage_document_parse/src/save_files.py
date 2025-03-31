@@ -58,7 +58,7 @@ def save_files(result, filename):
     with open(result_path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
     file_paths["result"] = result_path
-    print(f"║   -> API 결과 저장 완료: {result_path}║")
+    print(f"║   -> API 결과 저장 완료: {result_path}")
 
     # 4) PDF 이미지 크롭
     if elements:

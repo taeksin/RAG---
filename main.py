@@ -4,128 +4,64 @@ import fitz
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 UPSTAGE_SRC_DIR = os.path.join(CURRENT_DIR, "01_parse", "upstage_document_parse", "src")
-SPLIT_DIR = os.path.join(CURRENT_DIR, "02_split")
+CONSTRUCT_DIR = os.path.join(CURRENT_DIR, "02_construct")
 EMBEDDING_DIR = os.path.join(CURRENT_DIR, "03_embedding")
 
-for path in [UPSTAGE_SRC_DIR, SPLIT_DIR, EMBEDDING_DIR]:
+for path in [UPSTAGE_SRC_DIR, CONSTRUCT_DIR, EMBEDDING_DIR]:
     if path not in sys.path:
         sys.path.append(path)
 
 from upstage_document_parser import upstage_document_parse
-from split_pdf import split_pdf
-from split_01 import process_file_01
-from split_02 import process_file_02
-from split_03 import process_file_03
-from split_04 import process_file_04
-from excel_save import save_md_to_excel
-from excel_embedding import embedding_xl_to_faiss
-
-# 전역으로 4개의 Excel 파일 경로를 지정 (p1, p2, p3, p4 결과를 각각 저장)
-DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
-if not os.path.exists(DATA_DIR):
-    os.makedirs(DATA_DIR)
-
-excel_file_paths = [
-    os.path.join(DATA_DIR, "all_01.xlsx"),
-    os.path.join(DATA_DIR, "all_02.xlsx"),
-    os.path.join(DATA_DIR, "all_03.xlsx"),
-    os.path.join(DATA_DIR, "all_04.xlsx")
-]
-
-
-def process_pdf(pdf_file_path, pdf_index, total_pdfs):
-    # pdf_index에 따라 indicator 결정
-    if pdf_index == 0:
-        indicator = "first"
-    elif pdf_index == total_pdfs - 1:
-        indicator = "final"
-    else:
-        indicator = str(pdf_index + 1)
-    
-    # 1) PDF 파싱: PDF를 읽어 저장된 폴더 경로 획득
-    result_folder = upstage_document_parse(pdf_file_path)
-    print(f"║ 🟢[PDF 파싱 완료] {pdf_file_path} -> 저장된 폴더: {result_folder}")
-
-    # 2) 저장된 폴더 내에서 '_merged.md' 파일 찾기
-    merged_md = None
-    for filename in os.listdir(result_folder):
-        if filename.endswith("_merged.md"):
-            merged_md = os.path.join(result_folder, filename)
-            break
-    if not merged_md:
-        err_msg = f"'_merged.md' 파일을 찾을 수 없습니다. (폴더: {result_folder})"
-        print(err_msg)
-        return
-
-    # 3) split 4가지 방법 수행하여 4개의 MD 파일 경로 생성
-    p1 = process_file_01(merged_md).replace("\\", "/")
-    p2 = process_file_02(merged_md).replace("\\", "/")
-    p3 = process_file_03(merged_md).replace("\\", "/")
-    p4 = process_file_04(merged_md).replace("\\", "/")
-    md_file_paths = [p1, p2, p3, p4]
-    print(f"║ 🟢[SPLIT 완료] {pdf_file_path} \n║")
-    print("╚════════════════════════════════════════")
-    
-
-    # 4) 각 MD 파일에 대해 해당 Excel 파일에 저장 (인덱스별로 분리)
-    for idx, md_path in enumerate(md_file_paths):
-        if idx == 0:
-            excel_path = excel_file_paths[0]
-        elif idx == 1:
-            excel_path = excel_file_paths[1]
-        elif idx == 2:
-            excel_path = excel_file_paths[2]
-        elif idx == 3:
-            excel_path = excel_file_paths[3]
-        else:
-            continue
-        # indicator는 위에서 pdf의 순서를 기준으로 설정한 값 사용
-        try:
-            save_md_to_excel(md_path, indicator, excel_path)
-        except Exception as e:
-            print(f"[오류 발생] MD: {md_path}, 오류: {e}")
+from split_pdf import split_pdf 
+from construct_content_metadata import construct_embedding_contents
+from openaiEmbedding import openaiEmbedding
+from upstageEmbedding import upstageEmbedding
 
 def main():
-    # PDF 폴더와 파일명 설정
     pdf_folder = "pdf"
     pdf_filenames = [
         # "[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간.pdf",
         # "차트2_표1.pdf",
-        "모니터1p.pdf",
+        "모니터1~3p.pdf",
     ]
-    # 원본 PDF 파일 경로 리스트 생성
-    original_pdf_paths = [os.path.join(pdf_folder, fname) for fname in pdf_filenames]
     
-    # 모든 PDF 파일을 하나씩 split_pdf 함수에 넣어 처리한 후,
-    # 각 파일에 대해 반환된 결과(리스트)를 모두 합쳐 new_pdf_file_paths에 저장
-    pdf_file_paths = []
-    for path in original_pdf_paths:
-        result = split_pdf(path)
-        # split_pdf()는 항상 리스트를 반환함 (분할되지 않으면 [path] 반환)
-        pdf_file_paths.extend(result)
+    # upstage_document_parse의 반환값(폴더 경로)을 담을 리스트
+    all_result_folders = []
     
-    total_pdfs = len(pdf_file_paths)
-
-    # 순차적으로 각 PDF 처리
-    for idx, pdf_path in enumerate(pdf_file_paths):
-        process_pdf(pdf_path, idx, total_pdfs)
-
-    # 임베딩
-    print("╔════════════════════════════════════════")
-    embedding_xl_to_faiss(excel_file_paths)
-    print("╚════════════════════════════════════════")
-    
-    print("\n-------------------------------------")
-    print(f"[총 {len(pdf_filenames)}개 PDF 파일 처리 완료]")
-
-    # 전체 사용한 PDF 파일의 페이지 수 합산 (확인용)
-    total_pages = 0
-    for pdf_path in pdf_file_paths:
+    for filename in pdf_filenames:
+        pdf_path = os.path.join(pdf_folder, filename)
+        
+        # PDF 페이지 수 확인 (선택적)
         with fitz.open(pdf_path) as doc:
-            total_pages += len(doc)
-    print("-------------------------------------")
-    print(f"[최종] 사용한 전체 PDF의 페이지수: {total_pages}")
-    print("-------------------------------------")
+            page_count = doc.page_count
+        print(f"처리 중인 PDF: {pdf_path} (총 페이지: {page_count})")
+        
+        # split_pdf 함수 호출: PDF가 100페이지 미만이면 [원본경로]를, 이상이면 분할된 파일 목록을 반환
+        pdf_list = split_pdf(pdf_path)
+        
+        # 분할된 각 파일에 대해 upstage_document_parse 호출 후 반환값(폴더 경로)를 리스트에 저장
+        for file in pdf_list:
+            result_folder = upstage_document_parse(file)
+            print(f"║ ✅ [PDF 파싱 완료] {file} -> 저장된 폴더: {result_folder}")
+            all_result_folders.append(result_folder)
+    
+    # 모든 PDF 처리가 끝난 후, 각 결과 폴더에 대해 construct_embedding_contents 실행 후,
+    # 반환된 construct_path를 construct_paths 리스트에 저장
+    construct_paths = []
+    for folder in all_result_folders:
+        construct_path = construct_embedding_contents(folder)
+        # 경로 구분자를 replace()로 통일: 백슬래시를 슬래시로 변경
+        normalized_path = construct_path.replace("\\", "/")
+        construct_paths.append(normalized_path)
+    
+    # construct_paths 리스트에 있는 폴더 경로를 사용하여 임베딩 실행
+    print("║ ✅ openaiEmbedding 시작")
+    for path in construct_paths:
+        openaiEmbedding(path)
+    print("║ ✅ upstageEmbedding 시작")
+    for path in construct_paths:
+        upstageEmbedding(path)
+    print("╚════════════════════════════════════════\n")
 
 if __name__ == "__main__":
     main()
