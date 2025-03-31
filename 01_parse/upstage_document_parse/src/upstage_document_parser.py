@@ -56,7 +56,7 @@ def upstage_document_parse(pdf_file_path):
 
     # # 이미지 캡션 생성 및 MD에 캡션 병합
     generate_captions(OPENAI_API_KEY, BASE_FOLDER) 
-    # merge_captions_into_md(BASE_FOLDER)
+    # merge_captions_into_excel(BASE_FOLDER)
 
     # 오류가 없었다면 저장된 파일의 폴더경로를 반환함
     return BASE_FOLDER

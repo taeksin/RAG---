@@ -11,6 +11,7 @@ def extract_neighbors_by_elementid(df):
     """
     df["elementid"] = df["elementid"].astype(int)
     df_sorted = df.sort_values(by="elementid").reset_index(drop=True)
+    # 여기서는 "내용" 열이 이미지설명이 반영된 상태로 이미 업데이트되어 있다고 가정
     elementid_to_content = dict(zip(df_sorted["elementid"], df_sorted["내용"]))
     content_list = []
     for eid in df_sorted["elementid"]:
@@ -109,7 +110,7 @@ def get_3page_metadata(df):
 def get_cross_page_metadata(df):
     """
     metadata -3 생성 함수  
-    → [[[[[[현재페이지 전체 내용], [[[[[[이전페이지의 마지막 청크], [[[[[[다음페이지의 첫번째 청크]를 라벨과 함께 결합
+    → [[[[[[현재페이지 전체내용], [[[[[[이전페이지 마지막 청크], [[[[[[다음페이지 첫번째 청크]를 라벨과 함께 결합
     """
     df["elementid"] = df["elementid"].astype(int)
     df["페이지숫자"] = df["페이지숫자"].astype(int)
@@ -169,11 +170,21 @@ def construct_embedding_contents(base_folder):
         return
 
     df = pd.read_excel(excel_path)
+    
+    # "이미지설명" 열이 있다면, 해당 행의 "내용"에 추가하여 현재 청크의 내용에 포함시킴
+    if "이미지설명" in df.columns:
+        df["내용"] = df.apply(
+            lambda row: row["내용"] + ( "\n\n이미지설명: " + str(row["이미지설명"]) 
+                                        if pd.notna(row["이미지설명"]) and str(row["이미지설명"]).strip() != "" 
+                                        else "" ),
+            axis=1
+        )
+    
     os.makedirs(os.path.join(base_folder, "before"), exist_ok=True)
 
     # content 생성: key는 content의 종류를 나타냄.
     content_map = {
-        "chunk_only": df["내용"].tolist(),  # 원본 청크 내용 그대로 사용
+        "chunk_only": df["내용"].tolist(),  # 원본 청크 내용 그대로 사용 (이미지설명이 포함됨)
         "chunk_with_neighbors": extract_neighbors_by_elementid(df),
         "page_plus_chunk": extract_page_plus_chunk(df),
         "page_only": extract_page_only(df)
@@ -196,7 +207,7 @@ def construct_embedding_contents(base_folder):
     
     # 각 content type마다 메타데이터 suffix 지정:
     # chunk_only, chunk_with_neighbors, page_plus_chunk는 -1, -2, -3 생성
-    # page_only는 -1, -2만 생성
+    # page_only는 -2, -3만 생성
     for content_name, content_list in content_map.items():
         if content_name == "page_only":
             valid_meta_ids = ["2", "3"]
@@ -208,7 +219,6 @@ def construct_embedding_contents(base_folder):
             filename = f"{content_type_mapping[content_name]}-{meta_id}_{content_name}.xlsx"
             save_path = os.path.join(base_folder, "before", filename)
             save_excel(content_list, metadata_list, save_path)
-
 
     print("📁 총 11개의 content|metadata 엑셀 파일이 생성되었습니다.")
 
