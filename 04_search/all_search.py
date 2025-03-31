@@ -3,6 +3,7 @@ import os
 import numpy as np
 import pandas as pd
 import io
+import json
 from dotenv import load_dotenv
 from langchain_community.vectorstores import FAISS
 from langchain_openai.embeddings import OpenAIEmbeddings
@@ -13,26 +14,11 @@ import plotly.graph_objects as go
 from sklearn.metrics.pairwise import cosine_similarity
 
 # -----------------------------
-# DB 옵션 설정 (DB 1~4)
+# db_options.json 파일에서 DB 옵션 불러오기
 # -----------------------------
-db_options = {
-    "DB 1": {
-        "path": "vdb/faiss_index/small/01_upstageLayout",
-        "description": "upstage에서 나눠준 그대로 layout사용"
-    },
-    "DB 2": {
-        "path": "vdb/faiss_index/small/02_upstageLayout_overlap_1",
-        "description": "upstageLayout에 직전 블록까지만 overlap"
-    },
-    "DB 3": {
-        "path": "vdb/faiss_index/small/03_upstageLayout_overlap_2",
-        "description": "upstageLayout에 overlap만큼 채워질 때 까지 이전 내용 가져옴"
-    },
-    "DB 4": {
-        "path": "vdb/faiss_index/small/04_Nsplit",
-        "description": "그냥 텍스트에서 Chunk(500), Overlap(100)"
-    }
-}
+def load_db_options(filepath="db_options.json"):
+    with open(filepath, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 # -----------------------------
 # 시각화 함수들 (2D/3D)
@@ -40,7 +26,6 @@ db_options = {
 def visualize_embeddings_2d(embeddings_array, texts, query_text=None, query_embedding=None):
     pca = PCA(n_components=2)
     reduced = pca.fit_transform(embeddings_array)
-
     df = pd.DataFrame(reduced, columns=["X축", "Y축"])
     df["text"] = [t[:15] for t in texts]
 
@@ -70,7 +55,6 @@ def visualize_embeddings_2d(embeddings_array, texts, query_text=None, query_embe
 def visualize_embeddings_3d(embeddings_array, texts, query_text=None, query_embedding=None):
     pca = PCA(n_components=3)
     reduced = pca.fit_transform(embeddings_array)
-
     df = pd.DataFrame(reduced, columns=["X축", "Y축", "Z축"])
     df["text"] = [t[:15] for t in texts]
 
@@ -111,13 +95,6 @@ def main():
 
     # 사이드바: DB 선택 및 설명
     with st.sidebar:
-        st.header("DB 선택")
-        selected_db = st.radio(
-            "사용할 DB를 선택하세요:",
-            options=list(db_options.keys()),
-            format_func=lambda x: f"{x} - {db_options[x]['description']}"
-        )
-        st.markdown(f"**선택된 DB:** {selected_db}\n**경로:** `{db_options[selected_db]['path']}`")
         st.header("점수 계산 방식 안내")
         st.markdown("""
                     **L2 Distance (Euclidean Distance)**  
@@ -136,12 +113,76 @@ def main():
                     - 각 점은 원본 텍스트의 앞 15글자를 표시합니다.
                     - 2D와 3D를 지원합니다 탭을 바꿔서 확인 하실 수 있습니다.
                     """)
-                
-    # 선택된 DB에 따른 vdb 경로 설정
-    vdb_index_path = db_options[selected_db]["path"]
+        
+    # db_options.json 파일에서 DB 옵션 불러오기
+    db_options = load_db_options("04_search/db_options.json")
 
-    # 선택된 DB의 description을 사용하여 메인 타이틀 변경
-    st.title(db_options[selected_db]["description"])
+    # 상단 제목
+    st.title("RAG 임베딩과정 선택지 비교")
+
+    # 세부 안내
+    st.write("**아래 각 3단계에서 원하는 옵션을 선택하세요**")
+    st.write("---")
+
+    # --- CSS를 이용한 세로 구분선 스타일 ---
+    st.markdown(
+        """
+        <style>
+        .vertical-line {
+            display: inline-block;
+            border-left: 1px solid #888;
+            margin: 0 1rem;
+            /* 세로선 길이 늘리기 */
+            height: 3.2em; 
+            vertical-align: middle;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # 라디오 버튼을 가로로 배치 (세로 구분선 포함)
+    col1, col2, col3, col4, col5 = st.columns([2, 0.2, 2, 0.2, 2])
+
+    with col1:
+        st.markdown("##### 임베딩모델")
+        selected_category = st.radio(
+            "***임베딩모델을 선택합니다***",
+            options=list(db_options.keys()),
+            horizontal=True,
+            key="db_category"
+        )
+    with col2:
+        st.markdown('<div class="vertical-line"></div>', unsafe_allow_html=True)
+    with col3:
+        st.markdown("##### Content 구성 선택")
+        selected_content = st.radio(
+            "***Content 구성을 선택합니다***",
+            options=list(db_options[selected_category].keys()),
+            horizontal=True,
+            key="db_content"
+        )
+    with col4:
+        st.markdown('<div class="vertical-line"></div>', unsafe_allow_html=True)
+    with col5:
+        st.markdown("##### Metadata 구성 선택")
+        description_options = list(db_options[selected_category][selected_content].keys())
+        selected_description = st.radio(
+            "***Metadata 구성을 선택합니다***",
+            options=description_options,
+            horizontal=True,
+            key="db_desc"
+        )
+
+    st.write("---")
+
+    # 선택된 항목에 따른 최종 정보 업데이트
+    final_info = db_options[selected_category][selected_content][selected_description]
+    vdb_index_path = final_info["path"]
+    base_description = final_info["description"]
+
+    # 결과 표시
+    st.write(f"**사용 할 VectorDB Path**: `{vdb_index_path}`")
 
     # 임베딩 모델 생성
     embedding_model = OpenAIEmbeddings(
@@ -170,24 +211,24 @@ def main():
     if st.button("검색 실행") or query:
         if query.strip():
             try:
-                # FAISS에서 모든 문서를 검색 (전체 개수를 k로 전달)
+                # 전체 문서 개수만큼 검색
                 docs_with_score = vectorstore.similarity_search_with_score(query, k=faiss_index_size)
                 st.write(f"**검색 질의:** {query}")
                 st.write(f"**검색 결과:** 전체 {faiss_index_size}개 중 {len(docs_with_score)}개")
 
-                # 배치 임베딩: 쿼리와 문서들을 한 번에 임베딩
+                # 쿼리와 문서를 임베딩
                 query_emb = embedding_model.embed_documents([query])[0]
-                query_emb = np.array(query_emb)  # shape (D,)
-                
-                # 모든 검색 결과의 문서 내용을 리스트로 추출
-                contents = [doc.page_content for doc, _ in docs_with_score]
-                doc_embeddings = embedding_model.embed_documents(contents)
-                doc_embeddings = np.array(doc_embeddings)  # shape (n, D)
-                
-                # 벡터 연산을 이용해 L2 거리와 코사인 유사도 계산
+                query_emb = np.array(query_emb)
+
+                contents_list = [doc.page_content for doc, _ in docs_with_score]
+                doc_embeddings = embedding_model.embed_documents(contents_list)
+                doc_embeddings = np.array(doc_embeddings)
+
+                # L2 거리와 코사인 유사도
                 l2_dists = np.linalg.norm(doc_embeddings - query_emb, axis=1)
                 cos_sims = cosine_similarity(doc_embeddings, query_emb.reshape(1, -1)).flatten()
-                
+
+                # 결과 표
                 rows = []
                 for i, (doc, _) in enumerate(docs_with_score):
                     rows.append({
@@ -196,11 +237,10 @@ def main():
                         "content": doc.page_content,
                         "metadata": doc.metadata,
                     })
-
                 df = pd.DataFrame(rows)
                 st.dataframe(df)
 
-                # XLSX 다운로드 버튼
+                # XLSX 다운로드
                 download_filename = f"{query}_upstage_layout.xlsx"
                 buffer = io.BytesIO()
                 with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
@@ -215,27 +255,25 @@ def main():
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
 
-                contents_list = df["content"].tolist()
-                doc_embeddings = embedding_model.embed_documents(contents_list)
-                doc_embeddings = np.array(doc_embeddings)
+                # 2D / 3D 시각화 탭
+                tab2d, tab3d = st.tabs(["2D 시각화", "3D 시각화"])
+                with tab2d:
+                    fig_2d = visualize_embeddings_2d(
+                        embeddings_array=doc_embeddings,
+                        texts=contents_list,
+                        query_text=query,
+                        query_embedding=query_emb.reshape(1, -1)
+                    )
+                    st.plotly_chart(fig_2d, use_container_width=True)
+                with tab3d:
+                    fig_3d = visualize_embeddings_3d(
+                        embeddings_array=doc_embeddings,
+                        texts=contents_list,
+                        query_text=query,
+                        query_embedding=query_emb.reshape(1, -1)
+                    )
+                    st.plotly_chart(fig_3d, use_container_width=True)
 
-                # tab2d, tab3d = st.tabs(["2D 시각화", "3D 시각화"])
-                # with tab2d:
-                #     fig_2d = visualize_embeddings_2d(
-                #         embeddings_array=doc_embeddings,
-                #         texts=contents_list,
-                #         query_text=query,
-                #         query_embedding=query_emb.reshape(1, -1)
-                #     )
-                #     st.plotly_chart(fig_2d, use_container_width=True)
-                # with tab3d:
-                #     fig_3d = visualize_embeddings_3d(
-                #         embeddings_array=doc_embeddings,
-                #         texts=contents_list,
-                #         query_text=query,
-                #         query_embedding=query_emb.reshape(1, -1)
-                #     )
-                #     st.plotly_chart(fig_3d, use_container_width=True)
             except Exception as e:
                 st.error(f"검색 중 오류가 발생했습니다: {str(e)}")
         else:

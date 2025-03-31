@@ -1,0 +1,110 @@
+{
+  "openai_small": {
+    "해당 청크의 내용만 사용": {
+      "이웃 하는 청크의 내용": {
+        "path": "vdb/openai_small/1-1_chunk_only_text-embedding-3-small",
+        "description": "openai_small | 해당 청크의 내용만 사용 | 이웃 하는 청크의 내용"
+      },
+      "현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)": {
+        "path": "vdb/openai_small/1-2_chunk_only_text-embedding-3-small",
+        "description": "openai_small | 해당 청크의 내용만 사용 | 현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)"
+      },
+      "해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크": {
+        "path": "vdb/openai_small/1-3_chunk_only_text-embedding-3-small",
+        "description": "openai_small | 해당 청크의 내용만 사용 | 해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크"
+      }
+    },
+    "해당 청크와 이웃하는 청크까지 사용": {
+      "이웃 하는 청크의 내용": {
+        "path": "vdb/openai_small/2-1_chunk_with_neighbors_text-embedding-3-small",
+        "description": "openai_small | 해당 청크와 이웃하는 청크까지 사용 | 이웃 하는 청크의 내용"
+      },
+      "현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)": {
+        "path": "vdb/openai_small/2-2_chunk_with_neighbors_text-embedding-3-small",
+        "description": "openai_small | 해당 청크와 이웃하는 청크까지 사용 | 현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)"
+      },
+      "해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크": {
+        "path": "vdb/openai_small/2-3_chunk_with_neighbors_text-embedding-3-small",
+        "description": "openai_small | 해당 청크와 이웃하는 청크까지 사용 | 해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크"
+      }
+    },
+    "청크가 속한 페이지의 전체내용 + 청크 내용": {
+      "이웃 하는 청크의 내용": {
+        "path": "vdb/openai_small/3-1_page_plus_chunk_text-embedding-3-small",
+        "description": "openai_small | 청크가 속한 페이지의 전체내용 + 청크 내용 | 이웃 하는 청크의 내용"
+      },
+      "현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)": {
+        "path": "vdb/openai_small/3-2_page_plus_chunk_text-embedding-3-small",
+        "description": "openai_small | 청크가 속한 페이지의 전체내용 + 청크 내용 | 현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)"
+      },
+      "해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크": {
+        "path": "vdb/openai_small/3-3_page_plus_chunk_text-embedding-3-small",
+        "description": "openai_small | 청크가 속한 페이지의 전체내용 + 청크 내용 | 해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크"
+      }
+    },
+    "페이지 전체의 내용": {
+      "현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)": {
+        "path": "vdb/openai_small/4-2_page_only_text-embedding-3-small",
+        "description": "openai_small | 페이지 전체의 내용 | 현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)"
+      },
+      "해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크": {
+        "path": "vdb/openai_small/4-3_page_only_text-embedding-3-small",
+        "description": "openai_small | 페이지 전체의 내용 | 해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크"
+      }
+    }
+  },
+  "upstage_passage": {
+    "해당 청크의 내용만 사용": {
+      "이웃 하는 청크의 내용": {
+        "path": "vdb/upstage_passage/1-1_chunk_only_embedding-passage",
+        "description": "upstage_passage | 해당 청크의 내용만 사용 | 이웃 하는 청크의 내용"
+      },
+      "현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)": {
+        "path": "vdb/upstage_passage/1-2_chunk_only_embedding-passage",
+        "description": "upstage_passage | 해당 청크의 내용만 사용 | 현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)"
+      },
+      "해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크": {
+        "path": "vdb/upstage_passage/1-3_chunk_only_embedding-passage",
+        "description": "upstage_passage | 해당 청크의 내용만 사용 | 해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크"
+      }
+    },
+    "해당 청크와 이웃하는 청크까지 사용": {
+      "이웃 하는 청크의 내용": {
+        "path": "vdb/upstage_passage/2-1_chunk_with_neighbors_embedding-passage",
+        "description": "upstage_passage | 해당 청크와 이웃하는 청크까지 사용 | 이웃 하는 청크의 내용"
+      },
+      "현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)": {
+        "path": "vdb/upstage_passage/2-2_chunk_with_neighbors_embedding-passage",
+        "description": "upstage_passage | 해당 청크와 이웃하는 청크까지 사용 | 현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)"
+      },
+      "해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크": {
+        "path": "vdb/upstage_passage/2-3_chunk_with_neighbors_embedding-passage",
+        "description": "upstage_passage | 해당 청크와 이웃하는 청크까지 사용 | 해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크"
+      }
+    },
+    "청크가 속한 페이지의 전체내용 + 청크 내용": {
+      "이웃 하는 청크의 내용": {
+        "path": "vdb/upstage_passage/3-1_page_plus_chunk_embedding-passage",
+        "description": "upstage_passage | 청크가 속한 페이지의 전체내용 + 청크 내용 | 이웃 하는 청크의 내용"
+      },
+      "현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)": {
+        "path": "vdb/upstage_passage/3-2_page_plus_chunk_embedding-passage",
+        "description": "upstage_passage | 청크가 속한 페이지의 전체내용 + 청크 내용 | 현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)"
+      },
+      "해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크": {
+        "path": "vdb/upstage_passage/3-3_page_plus_chunk_embedding-passage",
+        "description": "upstage_passage | 청크가 속한 페이지의 전체내용 + 청크 내용 | 해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크"
+      }
+    },
+    "페이지 전체의 내용": {
+      "현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)": {
+        "path": "vdb/upstage_passage/4-2_page_only_embedding-passage",
+        "description": "upstage_passage | 페이지 전체의 내용 | 현재 청크가 속한 페이지내용과 이웃하는 페이지 사용 (총 3페이지)"
+      },
+      "해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크": {
+        "path": "vdb/upstage_passage/4-3_page_only_embedding-passage",
+        "description": "upstage_passage | 페이지 전체의 내용 | 해당 청크가 속한 페이지 +  이전페이지의 마지막청크 + 다음페이지의 첫번째 청크"
+      }
+    }
+  }
+}

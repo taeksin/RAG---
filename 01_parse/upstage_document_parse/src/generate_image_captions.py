@@ -84,18 +84,29 @@ def get_image_caption(image_path, api_key, prompt_context=""):
 def process_image_file(filename, items_folder, page_context_map, api_key):
     """
     개별 이미지 파일을 처리하여 캡션을 생성하고, 결과를 파일에 저장합니다.
+    만약 캡션 생성 결과가 None 또는 빈 문자열이면 한 번 더 요청하고,
+    재시도 후에도 실패하면 "openAI 멀티모달 api오류"라는 텍스트를 사용합니다.
     """
     if not filename.lower().endswith(".png"):
-        return
+        return None
     image_path = os.path.join(items_folder, filename)
     # 파일명에서 "_page_"와 그 뒤의 "_" 사이의 숫자를 추출 (예: "3_page_1_figure_1.png" → 페이지 번호 1)
     match = re.search(r'_page_(\d+)_', filename)
     page_num = int(match.group(1)) if match else None
     prompt_context = page_context_map.get(page_num, "") if page_num is not None else ""
+    
     caption = get_image_caption(image_path, api_key, prompt_context)
+    if not caption or caption.strip() == "":
+        # 캡션이 None 또는 빈 문자열이면 재시도
+        caption = get_image_caption(image_path, api_key, prompt_context)
+        if not caption or caption.strip() == "":
+            caption = "openAI 멀티모달 api오류"
+    
     caption_filename = os.path.join(items_folder, f"{os.path.splitext(filename)[0]}_caption.txt")
     with open(caption_filename, "w", encoding="utf-8") as f:
         f.write(caption)
+    
+    return caption
 
 def update_excel_with_captions(base_folder):
     """
@@ -142,8 +153,7 @@ def update_excel_with_captions(base_folder):
     df["이미지설명"] = df["이미지설명"].fillna("").astype(str)
     
     df.to_excel(excel_path, index=False)
-    print(f"║ 엑셀 파일에 이미지설명 업데이트 완료: {excel_path}")
-
+    print(f"║   -> 엑셀 파일에 이미지설명 업데이트 완료: {excel_path}")
 
 def generate_captions(api_key, base_folder):
     """
@@ -164,23 +174,24 @@ def generate_captions(api_key, base_folder):
 
     # Items 폴더 내의 png 파일들만 처리 (동시처리)
     filenames = [fname for fname in os.listdir(items_folder) if fname.lower().endswith(".png")]
-    
+    print("║ ✅ 이미지 캡션 작업")
     with ThreadPoolExecutor(max_workers=8) as executor:
         futures = []
         for filename in filenames:
             futures.append(executor.submit(process_image_file, filename, items_folder, page_context_map, api_key))
-        for future in tqdm(as_completed(futures), total=len(futures), desc="║ 이미지 캡션 생성"):
+        for future in tqdm(as_completed(futures), total=len(futures), desc="║   -> 이미지 캡션 생성"):
             future.result()
-    print(f"║ 이미지 캡션 생성 및 저장 완료. -> {base_folder}")
+            
+    print(f"║   -> 이미지 캡션 생성 및 저장 완료. -> {base_folder}")
     # 캡션 생성 후 엑셀 파일 업데이트
     update_excel_with_captions(base_folder)
 
 if __name__ == "__main__":
     load_dotenv()
-    UPSTAGE_API_KEY, OPENAI_API_KEY = map(os.getenv, ["UPSTAGE_API_KEY", "OPENAI_API_KEY"])
-    if not (UPSTAGE_API_KEY and OPENAI_API_KEY):
-        raise ValueError("환경 변수가 설정되지 않았습니다. .env 파일을 확인하세요.")
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    if not OPENAI_API_KEY:
+        raise ValueError("OPENAI_API_KEY 환경 변수가 설정되지 않았습니다. .env 파일을 확인하세요.")
     
     # 테스트용 base_folder (사용자가 직접 지정)
-    base_folder = "01_parse/upstage_document_parse/temp/250317-15-53_20241220_[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간"
+    base_folder = r"C:\Users\yoyo2\fas\RAG_Pre_processing\data\250331-13-07_모니터1~3p"
     generate_captions(OPENAI_API_KEY, base_folder)

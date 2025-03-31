@@ -5,6 +5,7 @@ import time
 from dotenv import load_dotenv
 from save_files import save_files  
 from generate_image_captions import generate_captions
+from merge_captions_into_excel import merge_captions_into_excel
 
 sys.dont_write_bytecode = True
 load_dotenv()
@@ -52,11 +53,12 @@ def preprocess_pdf(filename):
 
 def upstage_document_parse(pdf_file_path):
     
-    results = preprocess_pdf(pdf_file_path)
+    # results = preprocess_pdf(pdf_file_path)
+    preprocess_pdf(pdf_file_path)
 
     # # 이미지 캡션 생성 및 MD에 캡션 병합
     generate_captions(OPENAI_API_KEY, BASE_FOLDER) 
-    # merge_captions_into_excel(BASE_FOLDER)
+    merge_captions_into_excel(BASE_FOLDER)
 
     # 오류가 없었다면 저장된 파일의 폴더경로를 반환함
     return BASE_FOLDER
