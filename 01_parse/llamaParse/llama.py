@@ -43,7 +43,7 @@ parser = LlamaParse(
 # )
 
 # PDF 경로
-pdf_path = "pdf/차트2.pdf"
+pdf_path = "pdf/9.pdf"
 
 # PDF 존재 여부 확인
 if not os.path.exists(pdf_path):

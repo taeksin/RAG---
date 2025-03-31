@@ -142,7 +142,7 @@ def update_excel_with_captions(base_folder):
     df["이미지설명"] = df["이미지설명"].fillna("").astype(str)
     
     df.to_excel(excel_path, index=False)
-    print(f"엑셀 파일에 이미지설명 업데이트 완료: {excel_path}")
+    print(f"║ 엑셀 파일에 이미지설명 업데이트 완료: {excel_path}")
 
 
 def generate_captions(api_key, base_folder):
