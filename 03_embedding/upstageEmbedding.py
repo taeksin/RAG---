@@ -213,7 +213,7 @@ def upstageEmbedding(folder_path):
         )
 
         excel_filename = os.path.splitext(os.path.basename(file))[0]
-        save_path = os.path.join("vdb", "upstage_faiss", f"{excel_filename}_embedding-passage")
+        save_path = os.path.join("vdb", "upstage_passage", f"{excel_filename}_embedding-passage")
         file_vectorstore.save_local(save_path)
         print(f"║   -> {excel_filename} 파일의 임베딩이 성공적으로 저장되었습니다.")
 
