@@ -22,7 +22,7 @@ def main():
     pdf_filenames = [
         # "[보조교재]_연말정산 세무_이석정_한국_회원_3.5시간.pdf",
         # "차트2_표1.pdf",
-        "모니터8p.pdf",
+        "hanhwa 오시리아테마파크.pdf",
         "모니터1p.pdf",
     ]
     

@@ -16,7 +16,7 @@ def process_file(file, sheets, embedding_model, model):
             print(f"시트 {sheet} 읽기 실패: {e}")
             continue
 
-        # 'content', 'metadata' 컬럼 확인
+        # 'content', 'metadata' 컬럼 확인 (첫 두 컬럼)
         if "content" not in df.columns or "metadata" not in df.columns:
             print(f"파일 {file}의 시트 {sheet}에 'content' 또는 'metadata' 컬럼이 없습니다.")
             continue
@@ -26,18 +26,30 @@ def process_file(file, sheets, embedding_model, model):
             if pd.isna(row["content"]) or pd.isna(row["metadata"]):
                 continue
             content = row["content"]
-            # 불필요한 패턴 제거
+            # 불필요한 패턴 제거 (content 내)
             for pattern in ["[[[[[[이전청크]", "[[[[[[현재청크]", "[[[[[[다음청크]",
                             "[[[[[[현재페이지 전체내용]", "[[[[[[이전페이지 마지막 청크]", "[[[[[[다음페이지 첫번째 청크]"]:
                 content = content.replace(pattern, "")
             try:
                 metadata = json.loads(row["metadata"])
             except Exception as e:
-                print(f"메타데이터 파싱 실패 (파일 {file}, 시트 {sheet}, 행 {index}): {e}")
+                print(f"메타데이터 파싱 실패 (파일 {file}, 시트 {sheet}, 행 {index}), 메타데이터 글자수 {len(row['metadata'])}: {e}")
                 continue
+            # 엑셀에서 3번째 열(C열)부터 마지막 열까지 텍스트가 분할되어 저장되어 있으면 결합
+            text_parts = []
+            if len(df.columns) > 2:
+                # 첫 두 컬럼은 content, metadata이므로 3번째 컬럼부터 사용
+                for col in df.columns[2:]:
+                    val = row[col]
+                    if pd.notna(val):
+                        text_parts.append(str(val))
+            combined_text = "\n".join(text_parts)
+            # 불필요한 패턴 제거 (metadata의 text 내)
             for pattern in ["[[[[[[이전청크]", "[[[[[[현재청크]", "[[[[[[다음청크]",
                             "[[[[[[현재페이지 전체내용]", "[[[[[[이전페이지 마지막 청크]", "[[[[[[다음페이지 첫번째 청크]"]:
-                metadata["text"] = metadata["text"].replace(pattern, "")
+                combined_text = combined_text.replace(pattern, "")
+            # metadata에 text 필드 추가 (기존 내용은 덮어쓰거나, 원한다면 기존과 결합 가능)
+            metadata["text"] = combined_text
             documents.append(Document(page_content=content, metadata=metadata))
 
     if not documents:
@@ -52,6 +64,7 @@ def process_file(file, sheets, embedding_model, model):
     vectorstore.save_local(save_path)
     print(f"║   -> {excel_filename} 파일의 임베딩이 성공적으로 저장되었습니다.")
     return save_path
+
 
 def openaiEmbedding(folder_path):
     """
@@ -98,5 +111,5 @@ def openaiEmbedding(folder_path):
     return results
 
 if __name__ == "__main__":
-    folder_path = r"C:\Users\yoyo2\fas\RAG_Pre_processing\data\250331-16-57_모니터1p"
+    folder_path = r"C:\Users\yoyo2\fas\RAG_Pre_processing\data\250402-18-31"
     openaiEmbedding(folder_path)

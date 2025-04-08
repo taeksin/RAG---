@@ -208,23 +208,58 @@ def get_cross_page_metadata(df):
     return metadata
 
 def save_excel(content_list, metadata_list, output_path):
-    # metadata_list의 각 JSON 객체를 줄바꿈과 들여쓰기가 포함된 문자열로 변환 (indent=4)
-    metadata_json = [json.dumps(item, ensure_ascii=False, indent=4) for item in metadata_list]
-    out_df = pd.DataFrame({
-        "content": content_list,
-        "metadata": metadata_json
-    })
+    """
+    각 행별로 metadata의 text 필드는 최대 32767글자 단위로 분할하여 C열부터 기록하고,
+    B열에는 text를 제외한 나머지 metadata JSON 문자열을 기록합니다.
+    """
+    # 각 행마다 metadata에서 "text" 필드를 분리하고, 나머지 metadata는 JSON 문자열로 변환
+    new_metadata_rows = []  # B열에 기록될 metadata (text 제외)
+    text_chunks_list = []   # 각 행의 text를 32767글자 단위로 분할한 리스트
+    
+    chunk_size = 32767
+    max_chunks = 0
+    for meta in metadata_list:
+        # text 필드 분리
+        text = meta.get("text", "")
+        # text 제외한 나머지 필드를 JSON 문자열로 변환
+        meta_no_text = {k: v for k, v in meta.items() if k != "text"}
+        new_metadata_rows.append(json.dumps(meta_no_text, ensure_ascii=False, indent=4))
+        # text를 최대 chunk_size 크기로 분할
+        chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
+        text_chunks_list.append(chunks)
+        if len(chunks) > max_chunks:
+            max_chunks = len(chunks)
+    
+    # 데이터프레임에 넣을 컬럼 생성: "content", "metadata", "text_chunk_1", "text_chunk_2", ... 등
+    data = []
+    for content, meta_str, chunks in zip(content_list, new_metadata_rows, text_chunks_list):
+        row = {"content": content, "metadata": meta_str}
+        for i in range(max_chunks):
+            row[f"text_chunk_{i+1}"] = chunks[i] if i < len(chunks) else ""
+        data.append(row)
+    
+    out_df = pd.DataFrame(data)
     out_df.to_excel(output_path, index=False)
     
     # openpyxl을 사용하여 엑셀 서식 적용
     wb = load_workbook(output_path)
     ws = wb.active
-    ws.column_dimensions['A'].width = 80
-    ws.column_dimensions['B'].width = 80
-    for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=2):
+    
+    # 예시로 각 열의 너비를 조정 (원하는 크기로 수정 가능)
+    ws.column_dimensions['A'].width = 80   # content
+    ws.column_dimensions['B'].width = 80   # metadata (text 제외)
+    # text_chunk_* 열은 80보다 넓게 설정할 수 있음
+    for col in range(3, 3 + max_chunks):
+        col_letter = ws.cell(row=1, column=col).column_letter
+        ws.column_dimensions[col_letter].width = 80
+    
+    # 각 셀에 wrap_text 적용
+    for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=2+max_chunks):
         for cell in row:
             cell.alignment = Alignment(wrap_text=True, vertical='top')
+    
     wb.save(output_path)
+
 
 def construct_embedding_contents(folder_list):
     """
@@ -247,10 +282,10 @@ def construct_embedding_contents(folder_list):
         df = pd.read_excel(excel_path)
         df_list.append(df)
         # 개별 폴더에 대해서 기존 폴더 생성 및 파일 저장
-        # "이미지설명" 처리
+        # "이미지설명" 처리: 내용이 float 타입일 수 있으므로 문자열로 변환
         if "이미지설명" in df.columns:
             df["내용"] = df.apply(
-                lambda row: row["내용"] + ( "\n\n이미지설명: " + str(row["이미지설명"]) 
+                lambda row: str(row["내용"]) + ( "\n\n이미지설명: " + str(row["이미지설명"]) 
                                             if pd.notna(row["이미지설명"]) and str(row["이미지설명"]).strip() != "" 
                                             else "" ),
                 axis=1
@@ -294,7 +329,7 @@ def construct_embedding_contents(folder_list):
     combined_df = pd.concat(df_list, ignore_index=True)
     if "이미지설명" in combined_df.columns:
         combined_df["내용"] = combined_df.apply(
-            lambda row: row["내용"] + ( "\n\n이미지설명: " + str(row["이미지설명"]) 
+            lambda row: str(row["내용"]) + ( "\n\n이미지설명: " + str(row["이미지설명"]) 
                                         if pd.notna(row["이미지설명"]) and str(row["이미지설명"]).strip() != "" 
                                         else "" ),
             axis=1
@@ -302,7 +337,7 @@ def construct_embedding_contents(folder_list):
     
     # 현재 시각을 기반으로 출력 폴더 생성 (YYMMDD-HH24-MM)
     timestamp = datetime.now().strftime("%y%m%d-%H-%M")
-    output_folder = os.path.join(os.getcwd(),"data" , timestamp)
+    output_folder = os.path.join(os.getcwd(),"data", timestamp)
     os.makedirs(output_folder, exist_ok=True)
     
     

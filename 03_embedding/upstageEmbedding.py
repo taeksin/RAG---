@@ -112,7 +112,6 @@ def upstageEmbedding(folder_path):
     folder_path 내부에 있는 모든 Excel 파일(.xlsx)을 개별로 처리하여
     Upstage API를 사용한 임베딩 벡터스토어를 생성합니다.
     각 Excel 파일의 모든 시트를 사용하며, 파일별로 별도의 벡터스토어가 생성됩니다.
-    파일 간 내용이 섞이지 않도록 처리하며, 문서별 임베딩 요청은 동시 실행 최대 2개로 제한됩니다.
     """
     load_dotenv()
 
@@ -166,8 +165,8 @@ def upstageEmbedding(folder_path):
 
             df = df.dropna(subset=["content", "metadata"])
             for index, row in df.iterrows():
+                # content 처리
                 content = row["content"]
-                # 불필요한 패턴 제거
                 for pattern in ["[[[[[[이전청크]", "[[[[[[현재청크]", "[[[[[[다음청크]",
                                 "[[[[[[현재페이지 전체내용]", "[[[[[[이전페이지 마지막 청크]", "[[[[[[다음페이지 첫번째 청크]"]:
                     content = content.replace(pattern, "")
@@ -176,10 +175,29 @@ def upstageEmbedding(folder_path):
                 except Exception as e:
                     print(f"메타데이터 파싱 실패 (파일 {file}, 시트 {sheet}, 행 {index}): {e}")
                     continue
+                # 기존 metadata에 저장된 "text" 필드의 불필요한 패턴 제거
                 if "text" in metadata:
                     for pattern in ["[[[[[[이전청크]", "[[[[[[현재청크]", "[[[[[[다음청크]",
                                     "[[[[[[현재페이지 전체내용]", "[[[[[[이전페이지 마지막 청크]", "[[[[[[다음페이지 첫번째 청크]"]:
                         metadata["text"] = metadata["text"].replace(pattern, "")
+                # 엑셀에서 첫 두 컬럼("content", "metadata") 외에 추가로 있는 열(C열 이후)의 텍스트 결합
+                extra_text_parts = []
+                if len(df.columns) > 2:
+                    for col in df.columns[2:]:
+                        val = row[col]
+                        if pd.notna(val) and str(val).strip() != "":
+                            extra_text_parts.append(str(val))
+                extra_text = "\n".join(extra_text_parts)
+                # extra_text에서도 불필요한 패턴 제거
+                for pattern in ["[[[[[[이전청크]", "[[[[[[현재청크]", "[[[[[[다음청크]",
+                                "[[[[[[현재페이지 전체내용]", "[[[[[[이전페이지 마지막 청크]", "[[[[[[다음페이지 첫번째 청크]"]:
+                    extra_text = extra_text.replace(pattern, "")
+                # metadata의 "text" 필드에 기존 내용과 extra_text를 결합 (있으면 이어붙임)
+                if "text" in metadata:
+                    metadata["text"] = metadata["text"].strip() + "\n" + extra_text.strip()
+                else:
+                    metadata["text"] = extra_text.strip()
+
                 file_documents.append(Document(page_content=content, metadata=metadata))
         
         if not file_documents:
@@ -218,6 +236,6 @@ def upstageEmbedding(folder_path):
         print(f"║   -> {excel_filename} 파일의 임베딩이 성공적으로 저장되었습니다.")
 
 if __name__ == "__main__":
-    folder_path = r"C:\Users\yoyo2\fas\RAG_Pre_processing\data\250331-16-57_모니터1p"
+    folder_path = r"C:\Users\yoyo2\fas\RAG_Pre_processing\data\250402-18-31"
     print("║ ✅ upstageEmbedding 시작")
     upstageEmbedding(folder_path)

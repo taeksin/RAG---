@@ -101,12 +101,31 @@ def process_image_file(filename, items_folder, page_context_map, api_key):
         caption = get_image_caption(image_path, api_key, prompt_context)
         if not caption or caption.strip() == "":
             caption = "openAI 멀티모달 api오류"
-    
+
+    # ⚠️ 마크다운 블록 제거 (```markdown, ```)
+    caption = re.sub(r"```markdown\s*", "<<markdown시작>>", caption)
+    caption = caption.replace("```", "<<markdown종료>>")
+    caption = escape_json_string(caption)
+
+    # 결과 저장
     caption_filename = os.path.join(items_folder, f"{os.path.splitext(filename)[0]}_caption.txt")
     with open(caption_filename, "w", encoding="utf-8") as f:
         f.write(caption)
     
     return caption
+
+def escape_json_string(s):
+    return (
+        s.replace("\\", "\\\\")   # 백슬래시 먼저
+            .replace("\"", "\\\"")   # 큰따옴표
+            .replace("/", "\\/")     # 슬래시 (선택적)
+            .replace("\b", "\\b")    # 백스페이스
+            .replace("\f", "\\f")    # 폼피드
+            .replace("\n", "\\n")    # 줄바꿈
+            .replace("\r", "\\r")    # 캐리지 리턴
+            .replace("\t", "\\t")    # 탭
+    )
+
 
 def update_excel_with_captions(base_folder):
     """

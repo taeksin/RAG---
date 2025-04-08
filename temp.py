@@ -1,0 +1,72 @@
+import json
+
+raw_text = '''
+{
+    "elementid": [
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66
+    ],
+    "category": "h1",
+    "filename": "250402-12-41_hanhwa 오시리아테마파크1~10",
+    "page": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+    ],
+    "text": "[[[[[[이전페이지]\n\nPolicy\nPackage Insurance Policy\n\n한화손해보험\n\nA/C\n오시리아테마파크피에프브이 주식회사\nPolicy No.\nFA20246734777000 (0000 )\n\n이미지설명: | A\\/C                        | 오시리아파크피에프브이 주식회사 | Policy No.            |\\n|----------------------------|--------------------------------|-----------------------|\\n| 오시리아파크피에프브이 주식회사 | 오시리아파크피에프브이 주식회사 | FA202467477000 (0000) |\\n\n\n이미지설명: | A\\/C                        | 오시리아파크피에프브이 주식회사 | Policy No.            |\\n|----------------------------|--------------------------------|-----------------------|\\n| 오시리아파크피에프브이 주식회사 | 오시리아파크피에프브이 주식회사 | FA202467477000 (0000) |\\n\n\nTERMS AND CONDITIONS\n\n▶ Section I. Property All Risk\n3) Temporary Removal : Applied on the same premises only [일시적 철거비용 담보조항 : 동일구내에 한하여 적용] 4) Minor Works Clause [No coveris provided if the contract value(replacement cost) for any one contract exceeds the limit hereunder. All Business Interruption Losses resulting from minor works are especially excluded.] : Applied with limit of KRW 5,000,000,000 -any one contract [소규모 공사조항 [1도급계약당 계약금액(재조달기준)이  동 한도금액을 초과하는 경우 담보하지 않음. 소규모공사로 인해 발생하는 기업휴지위험은 특히 담보하지 않 음.] : 1 공사당 50억원 한도 내] 5) Capital additions [No coveris provided if the sum insured for any one addition exceeds the limit hereunder] : Applied with limit of KRW 5,000,000,000 -any one addition [추가재산 담보조항 [1추가당 가입금액이 동 한도금액을 초과하는 경우 담보하지 않음] : 1추가당 50억원 한도 내] 6) Fire Fighting Expenses : Applied with limit of KRW 3,000,000,000 -any one occurrence [소방비용 담보조항 : 1사고당 30억원 한도 내]\n14) Memo 1. Basis ofIndemnification : Replacement Cost Basis & Average Clause [보상기준 : 재조달가액 기준 & 비례보상\n7) Expediting Expenses : Applied with limit of KRW 3,000,000,000 -any one occurrence [특별비용 담보조항: 1사고당 30억원 한도 내]\n8) Sue and Labour : Applied [손해방지비용 담보조항 : 적용]\n9) Public Authorities Clause : Applied\n[공공기관조항 : 적용]\n10) Architects, Surveyors and Consulting Engineers : Applied\n[건축가, 조사가, 자문기술자 용역비용 담보조항: 적용] 1 1) Bodily Injury Liability Coverage Clause [신체손해배상책임담보 특별약관]\n12) Building Owner's Liability for Employee(s) Exclusion Clause [건물소유자의 종업원배상책임부담보 특별약관] 13) Legal Liability for Fire Damage to Property (Specific Building) [화재대물배상책임 특별약관(특수건물)]\n조항] 15) Memo 2. Certified Valuation : Not Applied\n[공인된 가액평가 : 미적용]\n16) Memo 3. Inventory / Stock Valuation and Declaration / Adjustment : Not Applied 평가 및 통지/정산 : 미적용]\n[재고동산 4. Limit of Liability : Total Sum Insured\n17) Memo Up to [보상한도액 : 보험가입금액 한도 내]\n18) Memo 5. Deductible : KRW 1,000,000 each and every loss perlocation [기초공제액 : 소재지별 매사고당 1백만원]\n19) Cover Strike, Riot & Civil Commotion Clause : Applied with limit of KRW 4,000,000,000 -any one occurrence [동맹파업, 폭동, 소요 특별약관]\n20) Deletion of A. Excepted Clause No. 4 in Special Exclusion to Section I(PAR) -Subsidence, Settlement, Landslip, Shrinkage or Expansion or Erosion of Soil 1. 부문하의 특별면책사항 A.4 삭제조항 -전복, 침하, 사태, 토양의 수축이나 팽창 또는 침식]\n[제\n▶ Section II. Machinery Breakdown\n1) Temporary Removal : Applied on the same premises only [일시적 철거비용 담보조항 : 동일구내에 한하여 적용]\n2) Expenses : Applied with limit of KRW 3,000,000,000 -any one occurrence\nExpediting 담보조항: 30억원 한도\n\n이미지설명: | 항목                                                                                           | 내용                                                                                           |\\n|----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|\\n| Section 1. Property All Risk                                                                 |                                                                                              
+|\\n| 3) Temporary Removal                                                                         | Applied on the same premises only                       
+                                     |\\n| [임시적 제거비용 담보조항 : 동일구내에 한하여 적용]                                                      |                                                                                              |\\n| 4) Minor Works Clause                                            
+                            | No cover is provided if the contract value(replacement cost) for any one contract exceeds the limit hereunder. All Business Interruption Losses resulting from minor works are especially excluded. : Applied with limit of KRW 5,000,000,000 –any one contract |\\n| [소규모 공사조항 : [1 도급계약의 계약금액(재조달가치)등이 한도금액을 초과하는 경우 담보하지 않음. 소규모공사로 인해 발생하는 기업휴지위험은 특히 담보하지 않음. : 1공사당 50억원 한도 내] |                                                                                              |\\n| 5) Capital additions                             
+                                            | No cover is provided if the sum insured for any one addition exceeds the limit hereunder : Applied with limit of KRW 5,000,000,000 –any one addition |\\n| [추가자산 담보조항 [1추가당 가입금액이 동 한도금액을 초과하는 경우 담보하지 않음] : 1추가당 50억원 한도 내] |                                                                                              |\\n| 6) Fire Fighting Expenses                                    
+                                | Applied with limit of KRW 3,000,000,000 –any one occurrence                                  |\\n| [소방비용 담보조항 : 1사고당 30억원 한도 내]                                                          |                                                                              
+                |\\n| 7) Expediting Expenses                                                                       | Applied with limit of KRW 3,000,000,000 –any one occurrence                                  |\\n| [특별비용 담보조항 : 1사고당 30억원 한도 내]                                                      
+    |                                                                                              |\\n| 8) Sue and Labour                                   
+                                         | Applied                                                                                      |\\n| [손해방지비용  담보조항 : 적용]                                                                  |                                                                          
+                    |\\n| 9) Architects, Surveyors and Consulting Engineers’ Fees                                      | Applied                             
+                                                         |\\n| [건축사, 측량사 및 컨설팅엔지니어 비용 담보조항 : 적용]                                       
+         |                                                                                              |\\n| 10) Removal of Debris                          
+                                              | Applied                                                                                      |\\n| [잔해제거 비용 담보조항 : 적용]                                                                  |                                                                     
+                         |\\n| 11) Professional Fees                                                                        | Applied                        
+
+
+'''
+try:
+    json.loads(f'{{"text": {json.dumps(raw_text)}}}')
+    print("✅ JSON 파싱 성공")
+except json.JSONDecodeError as e:
+    print("❌ JSON 파싱 실패:", e)
