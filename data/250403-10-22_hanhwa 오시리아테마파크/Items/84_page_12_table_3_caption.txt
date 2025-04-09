@@ -1,1 +1,0 @@
-<<markdown시작>>| Share (%) | Name of Companies |\n|-----------|-------------------|\n| 70        | 한화손해보험         |\n| 30        | DB손해보험         |\n<<markdown종료>>

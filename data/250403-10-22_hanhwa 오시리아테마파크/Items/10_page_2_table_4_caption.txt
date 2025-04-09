@@ -1,1 +1,0 @@
-<<markdown시작>>| Type   | Installment | due date   | Currency | Premium    |\n|--------|-------------|------------|----------|------------|\n| 일시납 | 1회차       | 100%       | 2024-01-31| WON      | 108,449,195 |\n<<markdown종료>>
