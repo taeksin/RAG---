@@ -5,22 +5,22 @@ import pandas as pd
 from dotenv import load_dotenv
 import streamlit as st
 
-from config import load_db_options
-from vectorsearch import load_vectorstore, search_query_vectorstore
-from visualization import create_visualization_2d, create_visualization_3d
+from config import load_db_options  # DB 옵션 불러오기 관련 함수
+from vectorsearch import load_vectorstore, search_query_vectorstore  # 벡터스토어 로드 및 검색 함수
+from visualization import create_visualization_2d, create_visualization_3d  # 2D, 3D 시각화 함수
 
-# .env 파일 로드
+# .env 파일 로드 (환경 변수 설정)
 load_dotenv()
 
-# DB 옵션 선택 인터페이스 (config.py 이용)
+# DB 옵션 선택 인터페이스 (db_options.json 파일 읽기)
 db_options = load_db_options("04_search/db_options.json")
 
-# 상단 제목 및 설명
+# 스트림릿 상단 제목 및 설명 출력
 st.title("RAG 임베딩과정 선택지 비교")
 st.write("**아래 각 3단계에서 원하는 옵션을 선택하세요**")
 st.write("---")
 
-# --- CSS를 이용한 세로 구분선 스타일 ---
+# CSS를 이용한 세로 구분선 스타일 정의
 st.markdown(
     """
     <style>
@@ -36,7 +36,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# 라디오 버튼을 가로로 배치 (세로 구분선 포함)
+# 5개의 컬럼을 생성하여 라디오 버튼들을 가로로 배치 (세로 구분선 포함)
 col1, col2, col3, col4, col5 = st.columns([2.1, 0.2, 3, 0.2, 3])
 
 with col1:
@@ -71,25 +71,26 @@ with col5:
 
 st.write("---")
 
-# 선택된 항목에 따른 최종 정보 업데이트
+# 선택된 옵션에 따른 최종 정보 업데이트 (벡터스토어 경로, 설명 등)
 final_info = db_options[selected_category][selected_content][selected_description]
 vdb_index_path = final_info["path"]
 base_description = final_info["description"]
 
-# 선택한 벡터스토어 경로 표시
+# 선택한 벡터스토어 경로 및 임베딩 관련 설명 출력
 st.write(f"**사용 할 VectorDB Path**: `{vdb_index_path}`")
 st.write(f"임베딩모델 | 임베딩한 내용(content)설명 | metadata구성")
 st.write(f"{base_description}")
 
-# FAISS 벡터스토어 로드 (vectorsearch.py 이용)
+# FAISS 벡터스토어 로드 (vectorsearch.py의 load_vectorstore 함수 사용)
 vectorstore = load_vectorstore(vdb_index_path, selected_category)
 
 # 저장소에서 DB 문서와 임베딩 배열 추출
+# 만약 vectorstore.docstore가 InMemoryDocstore라면 내부 _dict를 사용함
 docs = vectorstore.docstore._dict if hasattr(vectorstore.docstore, '_dict') else vectorstore.docstore
 db_texts = [doc.page_content for doc in docs.values()]
 db_embeddings = vectorstore.index.reconstruct_n(0, vectorstore.index.ntotal)
 
-# 사이드바: DB 선택 및 설명
+# 사이드바에 DB 선택 및 계산 방식 설명 출력
 with st.sidebar:
     st.header("점수 계산 방식 안내")
     st.markdown("""
@@ -110,15 +111,29 @@ with st.sidebar:
                 - 2D와 3D를 지원합니다 탭을 바꿔서 확인 하실 수 있습니다.
                 """)
 
-# 검색 인터페이스
+# 검색 인터페이스 함수
 def main():
+    """
+    Streamlit UI의 메인 함수.
+    
+    기능:
+      - 사용자가 검색어를 입력하면 선택한 벡터스토어에서 검색을 수행하고,
+        결과를 DataFrame으로 출력하며 XLSX 다운로드 및 2D/3D 시각화를 제공함.
+    
+    Input:
+      - 검색할 텍스트 (Streamlit 텍스트 입력)
+    
+    Output:
+      - 화면에 검색 결과, XLSX 다운로드 버튼, 2D/3D 시각화 탭 등을 제공함.
+    """
     st.header("검색")
     query = st.text_input("검색할 텍스트를 입력하세요:", placeholder="예: 관세", key="query")
     
     if st.button("검색 실행") and query:
+        # 벡터 검색 수행
         results, query_vector = search_query_vectorstore(query, selected_category, vectorstore, db_embeddings)
         if results:
-            # 결과 컬럼 순서: L2 거리, 코사인 유사도, 텍스트, 메타데이터
+            # 결과를 DataFrame으로 구성 (컬럼 순서: L2 거리, 코사인 유사도, 텍스트, 메타데이터)
             df_results = pd.DataFrame(results, columns=["L2 거리", "코사인 유사도", "텍스트", "메타데이터"])
             df_results = df_results.sort_values(by="코사인 유사도", ascending=False)
             st.subheader("검색 결과")
@@ -126,7 +141,8 @@ def main():
             st.write(f"**검색 결과:** 전체 {vectorstore.index.ntotal}개 중 {len(results)}개")
             st.dataframe(df_results.style.format({"L2 거리": "{:.4f}", "코사인 유사도": "{:.4f}"}))
             
-            # XLSX 다운로드
+            # XLSX 다운로드 기능
+            import io
             download_filename = f"{query}_{selected_category}.xlsx"
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:

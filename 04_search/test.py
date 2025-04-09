@@ -96,7 +96,9 @@ vdb_index_path = final_info["path"]
 base_description = final_info["description"]
 
 # 선택한 벡터스토어 경로 표시
-st.write(f"**사용 할 VectorDB Path**: {vdb_index_path}")
+st.write(f"**사용 할 VectorDB Path**: `{vdb_index_path}`")
+st.write(f"임베딩모델 | 임베딩한 내용(content)설명 | metadata구성")
+st.write(f"{base_description}")
 
 # ── 쿼리 임베딩 생성 함수 (선택한 임베딩 모델에 따라 분기) ──
 def get_query_embedding(text, selected_embedding):
